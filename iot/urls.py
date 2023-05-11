@@ -5,7 +5,7 @@ from django.views.generic import TemplateView
 app_name = 'iot'
 
 urlpatterns = [ 
-    path('mqtt/', TemplateView.as_view(template_name='iot/mqtt.html')),
+    path('mqtt/', TemplateView.as_view(template_name='iot/mqtt.html'), name='mqtt'),
     path('invasion/', detect_invasion),
     path('upload_image/', upload_image, name='upload_image'),
     path('upload_sec/', upload_sec, name='upload_sec'),
