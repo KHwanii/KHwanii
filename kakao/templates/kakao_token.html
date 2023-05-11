@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h2 class="ml-3 mt-3">
+    <i class="fa-solid fa-circle-info"></i>
+    Kakao Access Token 정보
+</h2>
+
+{% if token.error %}
+    <div>error: {{token.error}}</div>
+    <div>error_description: {{token.error_description}}</div>
+
+    <a href="javascript:history.back()" class="btn btn-info" role="button">돌아가기</a>
+
+{% else %}
+    <div class = "ml-3 mt-4">
+        <div>access_token: {{token.access_token}}</div>
+        <div>token_type: {{token.token_type}}</div>
+        <div>scope: {{token.scope}}</div>
+        <div>expires_in: {{token.expires_in}}</div>
+        <div>refresh_token: {{token.refresh_token}}</div>
+        <div>refresh_token_expires_in: {{token.refresh_token_expires_in}}</div>
+    </div>
+{% endif %}
+{% endblock %}
