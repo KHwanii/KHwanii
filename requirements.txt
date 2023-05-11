@@ -1,0 +1,5 @@
+pip install django
+pip install mysqlclient
+pip install paho-mqtt
+pip install djangorestframework
+pip install opencv-python
