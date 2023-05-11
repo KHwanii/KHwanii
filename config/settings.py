@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -91,10 +92,10 @@ WSGI_APPLICATION = "config.wsgi.application"
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.mysql",
-        "HOST": "os.environ['MYSQL_HOST']",
+        "HOST": os.environ['MYSQL_HOST'],
         "NAME": "IoTProject",
-        "USER": "os.environ['MYSQL_USER']",
-        "PASSWORD": "os.environ['MYSQL_PASSWORD']",
+        "USER": os.environ['MYSQL_USER'],
+        "PASSWORD": os.environ['MYSQL_PASSWORD'],
         "PORT" : "3306",
         "OPTIONS" : {"charset" : "utf8mb4"},
     }
