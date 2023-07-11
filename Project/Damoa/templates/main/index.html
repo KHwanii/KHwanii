@@ -1,0 +1,70 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="ko">
+
+  <head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" type="text/css" href="{% static 'bootstrap.min.css' %}">
+    <!-- main CSS -->
+    <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
+
+    <title>Damoa 시작 화면</title>
+    <style>
+      .body {
+        background-image:url(/static/img/mainbg.png);
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        background-size: cover;
+      }
+
+      .btn {
+        position: fixed;
+        left: 42%;
+        color: black;
+        background: gold;
+        border-color: gold;
+        border-radius: 1em;
+        font-size: 20px;
+        font-weight: bolder;
+        width: 220px;
+        height: 40px;
+      }
+
+      .login_button {
+        bottom: 160px;
+
+      }
+
+      .sign_button {
+        bottom: 100px;
+      }
+    </style>
+  </head>
+
+  <body class="body">
+    <div style = 'text-align: center;'>
+      <div class="mt-5">
+        <a href="{% url 'main:index' %}">
+          <img src="{% static 'img/damoa.png' %}" alt="Damoa Logo" width="380px;">
+        </a>
+      </div>
+      <div class="login_button">
+        <a class="btn login_button" href="{% url 'common:login' %}">로그인</a>
+      </div>
+      <div class="sign_button">
+        <a class="btn sign_button" href="{% url 'common:signup' %}">회원가입</a>
+      </div>
+    </div>
+
+    <!-- jQuery JS -->
+    <script src="{% static 'jquery-3.6.3.min.js' %}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <!-- Bootstrap JS -->
+    <script src="{% static 'bootstrap.min.js' %}"></script>
+  </body>
+
+</html>

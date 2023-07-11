@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div>
+    <h2 class="ml-3 mt-3">
+        <i class="fa-solid fa-message"></i>
+        Send KakaoTalk
+    </h2>
+    <hr>
+
+    {% if messages %}
+        {% for msg in messages %}
+            <div>
+                {{msg.message}}
+            </div>
+        {% endfor %}
+    {% endif %}
+
+    <form method = "post" class="ml-3">
+        {% csrf_token %}
+        <table>
+            {{ form.as_table }}
+        </table>
+        <br>
+        <input type="submit" value="send" class="btn btn-warning">
+    </form>    
+</div>
+
+{% endblock %}

@@ -1,0 +1,9 @@
+pip install django
+pip install django-allauth
+# sudo apt-get install libmysqlclient-dev
+# pip install mysqlclient
+pip install PyMySQL
+pip install paho-mqtt
+pip install djangorestframework
+pip install opencv-python
+pip install opencv-python-headless==4.7.0.72

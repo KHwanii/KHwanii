@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2 class="ml-3 mt-3">
+    <i class="fa-solid fa-lock"></i>
+    Kakao Login 
+</h2>
+<hr>
+
+<a href="https://kauth.kakao.com/oauth/authorize?client_id={{client_id}}&redirect_uri=http://127.0.0.1:8000/kakao/oauth&response_type=code&scope=talk_message"
+class="btn btn-warning ml-3">login</a>
+
+{% endblock %}

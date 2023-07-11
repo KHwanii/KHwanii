@@ -1,0 +1,214 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load main_filter %}
+
+{% block content %}
+  <style>
+    .board_box {
+      position: absolute;
+      left: 50%;
+      top: 55%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+      width: 98%;
+      height: 87%;
+      box-shadow: 1px 1px 10px 1px black;
+    }
+  </style>
+
+  <div class="container my-3">
+    <div class="row justify-content-between my-3">
+    <!-- 정렬기능 추가 -->
+      <div class="col-2">
+        <select class="form-control so">
+          <option value="recent" {% if so == 'recent' %} selected{% endif %}>
+            최신순
+          </option>
+          <option value="late" {% if so == 'late' %} selected{% endif %}>
+            오래된순
+          </option>
+          <option value="recommend" {% if so == 'recommend' %} selected{% endif %}>
+            참석자순
+          </option>
+          <option value="popular" {% if so == 'popular' %} selected{% endif %}>
+            인기순
+          </option>
+        </select>
+      </div>
+
+    <!-- 검색부분 추가 -->
+      <div class="row col-5 my-3">
+          <div class="input-group">
+            <input type="text" id="search_kw" class="form-control kw" value="{{ kw|default_if_none:'' }}">
+            <div class="input-group-append">
+              <button class="btn btn-outline-secondary" type="button" id="btn_search">찾기</button>
+            </div>
+          </div>
+      </div>
+  </div>
+
+    <table class="table">
+      <thead>
+        <tr class="text-center thead-dark">
+          <th>번호</th>
+          <th>클럽명</th>
+          <th style="width:30%">제목</th>
+          <th>작성자</th>
+          <th>참석자 수</th>
+          <th>모임일</th>
+          <!-- <th>작성일</th> -->
+        </tr>
+      </thead>
+
+      <tbody>
+        {% if board_list %}
+          {% for board in board_list %}
+            <tr class="text-center">
+              <td>{{board.id}}</td>
+              <td>{{ board.club }}</td>
+              <td class="text-left">
+                <a href="{%url 'main:detail' board.id%}">{{board.subject}}</a>  <small><i class="fa-regular fa-comments"></i>{{board.reply_set.count}}</small>
+              </td>
+              <td>{{board.author.name}}</td>
+              <td>{{board.voter.count}}</td>
+              <td>{{board.event_date}}</td>
+              <!-- <td>{{board.create_date}}</td> -->
+            </tr>
+
+          {% endfor %}
+        {% else %}
+          게시글이 없습니다.
+        {% endif %}
+      </tbody>
+    </table>
+
+    <!-- 페이징 처리 시작 -->
+    <ul class="pagination justify-content-center">
+      <!-- 이전 페이지 -->
+      {% if board_list.has_previous %}
+        <li class="page-item">
+          <a class="page-link" href="#" data-page="1">
+            <i class="fa-solid fa-backward-fast"></i>
+          </a>
+        </li>
+        <li class="page-item">
+          <a class="page-link" href="#" data-page="{{ board_list.previous_page_number }}">
+        <!-- 페이지 번호가 들어감 -->
+            <i class="fa-solid fa-caret-left"></i>
+        <!-- 이전이라는 글씨 대신에 아이콘을 넣음 -->
+          </a>
+        </li>
+      {% else %}
+        <li class="page-item disabled">
+          <a class="page-link" tabindex="-1" aria-disabled="true" href="#">
+            <i class="fa-solid fa-caret-left"></i>
+          </a>
+        </li>
+      {% endif %}
+
+      <!-- 페이지 리스트 -->
+      {% for page_number in board_list.paginator.page_range %}
+        <!-- 페이지 표시 제한 기능 Ctrl+Shift_P 하고 settins.json 들어가서 save 할때 false로 바꾸고 건드리기 -->
+        {% if page_number >= board_list.number|add:-3 and page_number <= board_list.number|add:3 %}
+          {% if page_number == board_list.number %}
+            <li class="page-item active" aria-current="page">
+              <a class="page-link" data-page="{{ page_number }}">
+                {{ page_number }}
+              </a>
+            </li>
+          {% else %}
+            <li class="" page-item="page-item">
+              <a class="page-link" data-page="{{ page_number }}">
+                {{ page_number }}
+              </a>
+            </li>
+          {% endif %}
+        {% endif %}
+      {% endfor %}
+
+      <!-- 다음 페이지 -->
+      {% if board_list.has_next %}
+        <li class="page-item">
+          <a class="page-link" href="#" data-page="{{ board_list.next_page_number }}">
+            <i class="fa-solid fa-caret-right"></i>
+            <!-- 다음이라는 글씨 대신에 아이콘을 넣음 -->
+          </a>
+        </li>
+        <li class="page-item">
+          <a class="page-link" href="#" data-page="{{ board_list.paginator.num_pages }}">
+            <i class="fa-solid fa-forward-fast"></i>
+          </a>
+        </li>
+      {% else %}
+        <li class="page-item disabled">
+          <a class="page-link" tabindex="-1" aria-disabled="true" href="#">
+            <i class="fa-solid fa-caret-right"></i>
+          </a>
+        </li>
+      {% endif %}
+    </ul>
+    {% if user.author_club.all %}
+    <a href="{%url 'main:board_create' %}" class="btn btn-warning">
+      <i class="fa-solid fa-pen"></i>
+      게시글 등록
+    </a>
+    {% else %}
+      <a href="{%url 'main:club_create' %}" class="btn btn-warning">클럽을 만드시겠어요?</a>
+    {% endif %}
+  </div>
+  <!-- 검색기능을 위한 SearchForm -->
+
+  <form id="searchForm" method="get" action="{% url 'main:board_list' %}">
+    <input type="hidden" id="kw" name="kw" value="{{ kw|default_if_none:'' }}">
+    <input type="hidden" id="page" name="page" value="{{ page }}">
+    <input type="hidden" id="so" name="so" value="{{ so }}">
+  </form>
+
+{% endblock %}
+
+<!-- 자바스크립트 영역 -->
+{% block script %}
+  <script type='text/javascript'>
+    // 검색기능 자바스크립트
+    const page_elements = document.getElementsByClassName("page-link");
+    Array
+      .from(page_elements)
+      .forEach(function (element) {
+        element.addEventListener('click', function () {
+          document
+            .getElementById('page')
+            .value = this.dataset.page;
+          document
+            .getElementById('searchForm')
+            .submit();
+        });
+      });
+    const btn_search = document.getElementById("btn_search");
+    btn_search.addEventListener('click', function () {
+      document
+        .getElementById('kw')
+        .value = document
+        .getElementById('search_kw')
+        .value;
+      document
+        .getElementById('page')
+        .value = 1; // 검색버튼을 클릭할 경우 1페이지부터 조회
+      document
+        .getElementById('searchForm')
+        .submit();
+    });
+
+    // 정렬기능 자바스크립트
+    const sortSelect = document.querySelector('.so');
+
+    sortSelect.addEventListener('change', () => {
+      const so = sortSelect.value;
+      const currentUrl = window.location.href;
+      const url = new URL(currentUrl);
+      url
+        .searchParams
+        .set('so', so);
+      window.location.href = url.href;
+    });
+  </script>
+{% endblock %}

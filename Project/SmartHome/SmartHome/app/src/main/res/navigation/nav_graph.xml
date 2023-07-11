@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/homeFragment">
+    <!-- 앱을 실행했을 때 켜지는 화면 설정-->
+
+    <!-- 프래그먼트 네비게이션 -->
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.example.smarthome.ui.home.HomeFragment"
+        android:label="home"
+        tools:layout="@layout/fragment_home" />
+    <fragment
+        android:id="@+id/DoorLockFragment"
+        android:name="com.example.smarthome.ui.doorLock.DoorLockFragment"
+        android:label="원격 doorlock"
+        tools:layout="@layout/fragment_doorlock" />
+    <fragment
+        android:id="@+id/VideoStreamFragment"
+        android:name="com.example.smarthome.ui.smartCam.VideoStreamFragment"
+        android:label="video_stream"
+        tools:layout="@layout/fragment_video_stream" >
+        <action
+            android:id="@+id/action_VideoStreamFragment_to_ImageListFragment"
+            app:destination="@id/ImageListFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/ImageListFragment"
+        android:name="com.example.smarthome.ui.smartCam.ImageListFragment"
+        android:label="ImageList" >
+        <action
+            android:id="@+id/action_ImageListFragment_to_imageDetailFragment"
+            app:destination="@id/imageDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/imageDetailFragment"
+        android:name="com.example.smarthome.ui.smartCam.ImageDetailFragment"
+        android:label="ImageDetailFragment" />
+    <fragment
+        android:id="@+id/CurtainFragment"
+        android:name="com.example.smarthome.ui.curtain.CurtainFragment"
+        android:label="fragment_curtain"
+        tools:layout="@layout/fragment_curtain" />
+    <fragment
+        android:id="@+id/TempHumidFragment"
+        android:name="com.example.smarthome.ui.tempHumi.TempHumiFragment"
+        android:label="fragment_temp_humi"
+        tools:layout="@layout/fragment_temp_humi" >
+        <action
+            android:id="@+id/action_TempHumidFragment_to_smartControlFragment"
+            app:destination="@id/smartControlFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/smartControlFragment"
+        android:name="com.example.smarthome.ui.tempHumi.SmartControlFragment"
+        android:label="fragment_smart_control"
+        tools:layout="@layout/fragment_smart_control" >
+        <action
+            android:id="@+id/action_smartControlFragment_to_TempHumidFragment"
+            app:destination="@id/TempHumidFragment" />
+    </fragment>
+</navigation>

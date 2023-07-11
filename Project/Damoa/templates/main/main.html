@@ -1,0 +1,278 @@
+{% extends 'base.html' %}
+{% load static %}
+
+<style>
+  .table {
+    width: 1400px;
+    height: 600px;
+  }
+
+  .row {
+    width: 1600px;
+  }
+
+  .icon-box {
+    width: 350px;
+    height: 250px;
+    box-shadow: 2px 2px 12px 2px black;
+  }
+
+  .title {
+    text-align: center;
+  }
+
+  .img {
+    display: block;
+    margin: auto;
+    height: 100px;
+  }
+
+  .description {
+    text-align: center;
+  }
+</style>
+
+{% block content %}
+  <div class="container">
+    <br>
+    <h1>Damoa Club</h1>
+
+    <table class="table">
+      <thead></thead>
+      <tbody style="text-align: center;">
+        <tr>
+          <td>
+            <br>
+            <a href="{% url 'main:board_list'%}" style="display: block;">
+              <img src="{% static 'img/gallery/all.png' %}" style="width: 200px; height: auto;">
+              </a>
+              <br>전체글 보기
+          </td>
+          <td>
+            <br>
+            <a href="{% url 'main:board_list'%}?kw=SP" style="display: block;">
+              <img src="{% static 'img/gallery/sports.png' %}" style="width: 180px; height: auto;">
+            </a>
+            <br>스포츠
+          </td>
+          <td>
+            <br>
+            <a href="{% url 'main:board_list'%}?kw=CK" style="display: block;">
+              <img class="club" src="{% static 'img/gallery/cook.png' %}" style="width: 180px; height: auto;">
+            </a>
+            <br>요리
+          </td>
+          <td>
+            <br>
+            <a href="{% url 'main:board_list'%}?kw=CT" style="display: block;">
+              <img class="club" src="{% static 'img/gallery/culture.png' %}" style="width: 180px; height: auto;">
+            </a>
+            <br>문화
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <br>
+            <a href="{% url 'main:board_list'%}?kw=OD" style="display: block;">
+              <img class="club" src="{% static 'img/gallery/outdoor.png' %}" style="width: 180px; height: auto;">
+            </a>
+            <br>아웃도어
+          </td>
+          <td>
+            <br>
+            <a href="{% url 'main:board_list'%}?kw=LA" style="display: block;">
+              <img class="club" src="{% static 'img/gallery/language.png' %}" style="width: 180px; height: auto;">
+            </a>
+            <br>언어
+          </td>
+          <td>
+            <br>
+            <a href="{% url 'main:board_list'%}?kw=GA" style="display: block;">
+              <img class="club" src="{% static 'img/gallery/game.png' %}" style="width: 180px; height: auto;">
+            </a>
+            <br>게임/오락
+          </td>
+          <td>
+            <br>
+            <a href="{% url 'main:board_list'%}?kw=MU" style="display: block;">
+              <img class="club" src="{% static 'img/gallery/music.png' %}" style="width: 180px; height: auto;">
+            </a>
+            <br>음악/악기
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <hr>
+<br>
+
+    <div>
+      <a href="{%url 'main:club_create' %}" class="btn btn-warning">클럽 만들기</a>
+      <p></p>
+      <div class="container">
+        <table class="table">
+          <thead>
+            <tr class="thead-blue">
+              <th>번호</th>
+              <th>클럽명</th>
+              <th>삭제</th>
+            </tr>
+          </thead>
+          <tbody>
+
+            {% if club_list %}
+              {% for club in club_list %}
+                <tr>
+                  <td>{{forloop.counter}}</td>
+                  <td>
+                    <a href="{% url 'main:board_list'%}?kw={{ club.name }}">{{club.name}}</a>
+                  </td>
+                  <td>
+                    {% if request.user == club.author %}
+                      <a href="#" class="delete btn btn-sm btn-outline-secondary" data-uri="{% url 'main:club_delete' club.id %}">삭제</a>
+                      {%else%}
+                      
+                    {% endif %}
+                  </td>
+                </tr>
+              {% endfor %}
+            {% else %}
+              <tr>
+                게시글이 없습니다.
+              </tr>
+            {% endif %}
+          </tbody>
+        </table>
+
+        <!-- 페이징 처리 시작 -->
+        <ul class="pagination justify-content-center">
+          <!-- 이전 페이지 -->
+          {% if club_list.has_previous %}
+            <li class="page-item">
+              <a class="page-link" href="?page=1" data-page="1">
+                <i class="fa-solid fa-backward-fast"></i>
+              </a>
+            </li>
+
+            <li class="page-item">
+              <a class="page-link" href="?page={{ club_list.previous_page_number }}">
+            <!-- 페이지 번호가 들어감 -->
+                <i class="fa-solid fa-caret-left"></i>
+            <!-- 이전이라는 글씨 대신에 아이콘을 넣음 -->
+              </a>
+            </li>
+          {% else %}
+            <li class="page-item disabled">
+              <a class="page-link" tabindex="-1" aria-disabled="true" href="#">
+                <i class="fa-solid fa-caret-left"></i>
+              </a>
+            </li>
+          {% endif %}
+
+          <!-- 페이지 리스트 -->
+          {% for page_number in club_list.paginator.page_range %}
+          <!-- 페이지 표시 제한 기능 Ctrl+Shift_P 하고 settins.json 들어가서 save 할때 false로 바꾸고 건드리기 -->
+          {% if page_number >= club_list.number|add:-3 and page_number <= club_list.number|add:3 %}
+            {% if page_number == club_list.number %}
+              <li class="page-item active" aria-current="page">
+                <a class="page-link" data-page="{{ page_number }}">
+                  {{ page_number }}
+                </a>
+              </li>
+            {% else %}
+              <li class="" page-item="page-item">
+                <a class="page-link" data-page="{{ page_number }}">
+                  {{ page_number }}
+                </a>
+              </li>
+            {% endif %}
+          {% endif %}
+          {% endfor %}
+
+          <!-- 다음 페이지 -->
+          {% if club_list.has_next %}
+            <li class="page-item">
+              <a class="page-link" href="?page={{ club_list.next_page_number }}">
+                <i class="fa-solid fa-caret-right"></i>
+                <!-- 다음이라는 글씨 대신에 아이콘을 넣음 -->
+              </a>
+            </li>
+
+            <li class="page-item">
+              <a class="page-link" href="?page={{ club_list.paginator.num_pages }}">
+                <i class="fa-solid fa-forward-fast"></i>
+              </a>
+            </li>
+          {% else %}
+            <li class="page-item disabled">
+              <a class="page-link" tabindex="-1" aria-disabled="true" href="#">
+                <i class="fa-solid fa-caret-right"></i>
+              </a>
+            </li>
+          {% endif %}
+        </ul>
+      </div>
+    </div>
+<br>
+
+    <hr style="color: black; size: 3px;">
+    <!--카테고리-->
+    <table class="table" style="text-align: center;">
+      <td>
+        <div>
+          <div class="icon-box">
+            <br><h4>최신 클럽<br><br>
+              <a href="{% url 'main:board_list'%}?so=recent" style="display: block;">
+                <img src="{% static 'img/new.png' %}" style="width: 210px; height: auto;"></a>
+            </h4>
+            <p></p>
+            <br>
+            <p>모여모여!<br>가장 최신 클럽에 가입해 보세요</p>
+          </div>
+        </div>
+      </td>
+      <td>
+        <div>
+          <div class="icon-box">
+            <br><h4>인기 클럽<br><br>
+              <a href="{% url 'main:board_list'%}?so=popular" style="display: block;">
+                <img src="{% static 'img/heart.png' %}" style="width: 215px; height: auto;"></a>
+            </h4>
+            <p></p>
+            <br>
+            <p>인기폭발!<br>지금 가장 핫한 클럽에 가입해 보세요</p>
+          </div>
+        </div>
+      </td>
+      <td>
+        <div>
+          <div class="icon-box">
+            <br><h4>추천 클럽<br><br>
+              <a href="{% url 'main:board_list'%}?so=recommend" style="display: block;">
+                <img src="{% static 'img/star.png' %}" style="width: 200px; height: auto;"></a>
+            </h4>
+            <p></p>
+            <p>강력추천!<br>DAMOA가 추천하는 클럽에 가입해 보세요</p>
+          </div>
+        </div>
+      </td>
+    </table>
+  {% endblock %}
+
+  {% block script %}
+    <script>
+      $(document).ready(function () {
+        $(".delete").on('click', function () {
+          if (confirm("정말로 삭제하시겠습니까?")) {
+            location.href = $(this).data('uri');
+          }
+        });
+      });
+
+      $(document).ready(function() {
+        $(".page-link").on("click", function() {
+          var page = $(this).data("page");
+          window.location.href = "?page=" + page;
+         });
+      });
+    </script>
+  {% endblock %}

@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+  <div class="container">
+    <h4 class="my-3 border-bottom pb-2">
+      <i class="fa-regular fa-pen-to-square"></i>
+      게시글 작성
+    </h4>
+
+    <form method="post" class="post-form my-3">
+      {% csrf_token %}
+      {{form.as_p}}
+      {{form.media}}
+      <button type="submit" class="btn btn-primary">
+        <i class="fa-solid fa-floppy-disk"></i>
+        등록
+      </button>
+    </form>
+  </div>
+
+{% endblock %}

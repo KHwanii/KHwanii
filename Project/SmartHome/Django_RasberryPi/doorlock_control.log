@@ -1,0 +1,117 @@
+INFO:root:doorlock_control: Starting
+DEBUG:urllib3.connectionpool:Starting new HTTP connection (1): 192.168.45.155:8000
+DEBUG:urllib3.connectionpool:Starting new HTTP connection (1): 192.168.45.155:8000
+DEBUG:urllib3.connectionpool:http://192.168.45.155:8000 "GET /api/standard_temp/ HTTP/1.1" 200 74
+DEBUG:urllib3.connectionpool:Starting new HTTP connection (1): 192.168.45.155:8000
+DEBUG:urllib3.connectionpool:http://192.168.45.155:8000 "POST /api/control_doorlock/ HTTP/1.1" 201 24
+INFO:root:doorlock_control: Starting
+DEBUG:urllib3.connectionpool:Starting new HTTP connection (1): 192.168.45.155:8000
+DEBUG:urllib3.connectionpool:http://192.168.45.155:8000 "GET /api/standard_humi/ HTTP/1.1" 200 74
+DEBUG:urllib3.connectionpool:Starting new HTTP connection (1): 192.168.45.155:8000
+DEBUG:urllib3.connectionpool:http://192.168.45.155:8000 "POST /api/control_doorlock/ HTTP/1.1" 201 25
+INFO:root:doorlock_control: Starting
+DEBUG:urllib3.connectionpool:Starting new HTTP connection (1): 192.168.45.155:8000
+DEBUG:urllib3.connectionpool:http://192.168.45.155:8000 "GET /api/standard_temp/ HTTP/1.1" 200 74
+DEBUG:urllib3.connectionpool:Starting new HTTP connection (1): 192.168.45.155:8000
+DEBUG:urllib3.connectionpool:http://192.168.45.155:8000 "POST /api/control_doorlock/ HTTP/1.1" 201 24
+INFO:root:doorlock_control: Starting
+DEBUG:urllib3.connectionpool:Starting new HTTP connection (1): 192.168.45.155:8000
+DEBUG:urllib3.connectionpool:http://192.168.45.155:8000 "GET /api/standard_humi/ HTTP/1.1" 200 74
+DEBUG:urllib3.connectionpool:Starting new HTTP connection (1): 192.168.45.155:8000
+DEBUG:urllib3.connectionpool:http://192.168.45.155:8000 "POST /api/control_doorlock/ HTTP/1.1" 201 25
+INFO:root:doorlock_control: Starting
+DEBUG:urllib3.connectionpool:Starting new HTTP connection (1): 192.168.45.155:8000
+DEBUG:urllib3.connectionpool:http://192.168.45.155:8000 "POST /api/temp/ HTTP/1.1" 201 88
+DEBUG:urllib3.connectionpool:Starting new HTTP connection (1): 192.168.45.155:8000
+INFO:root:doorlock_control: Starting
+DEBUG:urllib3.connectionpool:Starting new HTTP connection (1): 192.168.45.155:8000
+DEBUG:urllib3.connectionpool:Starting new HTTP connection (1): 192.168.45.155:8000
+DEBUG:urllib3.connectionpool:http://192.168.45.155:8000 "GET /api/standard_temp/ HTTP/1.1" 200 74
+DEBUG:urllib3.connectionpool:Starting new HTTP connection (1): 192.168.45.155:8000
+DEBUG:urllib3.connectionpool:http://192.168.45.155:8000 "POST /api/control_doorlock/ HTTP/1.1" 201 24
+INFO:root:doorlock_control: Starting
+DEBUG:urllib3.connectionpool:Starting new HTTP connection (1): 192.168.45.155:8000
+DEBUG:urllib3.connectionpool:http://192.168.45.155:8000 "GET /api/standard_humi/ HTTP/1.1" 200 74
+DEBUG:urllib3.connectionpool:Starting new HTTP connection (1): 192.168.45.155:8000
+DEBUG:urllib3.connectionpool:http://192.168.45.155:8000 "POST /api/control_doorlock/ HTTP/1.1" 201 25
+INFO:root:doorlock_control: Starting
+DEBUG:urllib3.connectionpool:Starting new HTTP connection (1): 192.168.45.155:8000
+DEBUG:urllib3.connectionpool:http://192.168.45.155:8000 "GET /api/standard_temp/ HTTP/1.1" 200 74
+DEBUG:urllib3.connectionpool:Starting new HTTP connection (1): 192.168.45.155:8000
+DEBUG:urllib3.connectionpool:http://192.168.45.155:8000 "POST /api/control_doorlock/ HTTP/1.1" 201 24
+INFO:root:doorlock_control: Starting
+DEBUG:urllib3.connectionpool:Starting new HTTP connection (1): 192.168.45.155:8000
+DEBUG:urllib3.connectionpool:http://192.168.45.155:8000 "GET /api/standard_humi/ HTTP/1.1" 200 74
+DEBUG:urllib3.connectionpool:Starting new HTTP connection (1): 192.168.45.155:8000
+DEBUG:urllib3.connectionpool:http://192.168.45.155:8000 "POST /api/control_doorlock/ HTTP/1.1" 201 25
+INFO:root:doorlock_control: Starting
+DEBUG:urllib3.connectionpool:Starting new HTTP connection (1): 192.168.45.155:8000
+DEBUG:urllib3.connectionpool:http://192.168.45.155:8000 "POST /api/temp/ HTTP/1.1" 201 88
+DEBUG:urllib3.connectionpool:Starting new HTTP connection (1): 192.168.45.155:8000
+DEBUG:urllib3.connectionpool:http://192.168.45.155:8000 "POST /api/control_doorlock/ HTTP/1.1" 201 24
+INFO:root:doorlock_control: Starting
+DEBUG:urllib3.connectionpool:Starting new HTTP connection (1): 192.168.45.155:8000
+DEBUG:urllib3.connectionpool:http://192.168.45.155:8000 "POST /api/humi/ HTTP/1.1" 201 88
+DEBUG:urllib3.connectionpool:Starting new HTTP connection (1): 192.168.45.155:8000
+DEBUG:urllib3.connectionpool:http://192.168.45.155:8000 "POST /api/control_doorlock/ HTTP/1.1" 201 25
+INFO:root:doorlock_control: Starting
+DEBUG:urllib3.connectionpool:Starting new HTTP connection (1): 192.168.45.155:8000
+DEBUG:urllib3.connectionpool:http://192.168.45.155:8000 "POST /api/control_aircon/ HTTP/1.1" 201 23
+DEBUG:urllib3.connectionpool:Starting new HTTP connection (1): 192.168.45.155:8000
+DEBUG:urllib3.connectionpool:http://192.168.45.155:8000 "POST /api/control_doorlock/ HTTP/1.1" 201 24
+INFO:root:doorlock_control: Starting
+DEBUG:urllib3.connectionpool:Starting new HTTP connection (1): 192.168.45.155:8000
+DEBUG:urllib3.connectionpool:http://192.168.45.155:8000 "POST /api/control_heater/ HTTP/1.1" 201 23
+DEBUG:urllib3.connectionpool:Starting new HTTP connection (1): 192.168.45.155:8000
+DEBUG:urllib3.connectionpool:http://192.168.45.155:8000 "POST /api/control_doorlock/ HTTP/1.1" 201 25
+INFO:root:doorlock_control: Starting
+DEBUG:urllib3.connectionpool:Starting new HTTP connection (1): 192.168.45.155:8000
+DEBUG:urllib3.connectionpool:http://192.168.45.155:8000 "POST /api/control_humidifier/ HTTP/1.1" 201 27
+DEBUG:urllib3.connectionpool:Starting new HTTP connection (1): 192.168.45.155:8000
+DEBUG:urllib3.connectionpool:http://192.168.45.155:8000 "POST /api/control_doorlock/ HTTP/1.1" 201 24
+INFO:root:doorlock_control: Starting
+DEBUG:urllib3.connectionpool:Starting new HTTP connection (1): 192.168.45.155:8000
+DEBUG:urllib3.connectionpool:http://192.168.45.155:8000 "POST /api/control_dehumidifier/ HTTP/1.1" 201 28
+DEBUG:urllib3.connectionpool:http://192.168.45.155:8000 "POST /api/control_doorlock/ HTTP/1.1" 201 25
+INFO:root:doorlock_control: Starting
+DEBUG:urllib3.connectionpool:Starting new HTTP connection (1): 192.168.45.155:8000
+DEBUG:urllib3.connectionpool:Starting new HTTP connection (1): 192.168.45.155:8000
+DEBUG:urllib3.connectionpool:http://192.168.45.155:8000 "POST /api/control_doorlock/ HTTP/1.1" 201 24
+INFO:root:doorlock_control: Starting
+DEBUG:urllib3.connectionpool:Starting new HTTP connection (1): 192.168.45.155:8000
+DEBUG:urllib3.connectionpool:http://192.168.45.155:8000 "GET /api/standard_temp/ HTTP/1.1" 200 74
+DEBUG:urllib3.connectionpool:Starting new HTTP connection (1): 192.168.45.155:8000
+DEBUG:urllib3.connectionpool:http://192.168.45.155:8000 "POST /api/control_doorlock/ HTTP/1.1" 201 25
+INFO:root:doorlock_control: Starting
+DEBUG:urllib3.connectionpool:Starting new HTTP connection (1): 192.168.45.155:8000
+DEBUG:urllib3.connectionpool:http://192.168.45.155:8000 "GET /api/standard_humi/ HTTP/1.1" 200 74
+DEBUG:urllib3.connectionpool:http://192.168.45.155:8000 "POST /api/control_doorlock/ HTTP/1.1" 201 24
+INFO:root:doorlock_control: Starting
+DEBUG:urllib3.connectionpool:Starting new HTTP connection (1): 192.168.45.155:8000
+DEBUG:urllib3.connectionpool:http://192.168.45.155:8000 "POST /api/control_doorlock/ HTTP/1.1" 201 25
+INFO:root:doorlock_control: Starting
+DEBUG:urllib3.connectionpool:Starting new HTTP connection (1): 192.168.45.155:8000
+DEBUG:urllib3.connectionpool:Starting new HTTP connection (1): 192.168.45.155:8000
+DEBUG:urllib3.connectionpool:http://192.168.45.155:8000 "POST /api/control_doorlock/ HTTP/1.1" 201 24
+INFO:root:doorlock_control: Starting
+DEBUG:urllib3.connectionpool:Starting new HTTP connection (1): 192.168.45.155:8000
+DEBUG:urllib3.connectionpool:http://192.168.45.155:8000 "GET /api/standard_temp/ HTTP/1.1" 200 74
+DEBUG:urllib3.connectionpool:Starting new HTTP connection (1): 192.168.45.155:8000
+DEBUG:urllib3.connectionpool:http://192.168.45.155:8000 "GET /api/standard_humi/ HTTP/1.1" 200 74
+DEBUG:urllib3.connectionpool:http://192.168.45.155:8000 "POST /api/control_doorlock/ HTTP/1.1" 201 25
+INFO:root:doorlock_control: Starting
+DEBUG:urllib3.connectionpool:Starting new HTTP connection (1): 192.168.45.155:8000
+DEBUG:urllib3.connectionpool:Starting new HTTP connection (1): 192.168.45.155:8000
+DEBUG:urllib3.connectionpool:http://192.168.45.155:8000 "POST /api/control_doorlock/ HTTP/1.1" 201 24
+INFO:root:doorlock_control: Starting
+DEBUG:urllib3.connectionpool:Starting new HTTP connection (1): 192.168.45.155:8000
+DEBUG:urllib3.connectionpool:http://192.168.45.155:8000 "POST /api/temp/ HTTP/1.1" 201 88
+DEBUG:urllib3.connectionpool:Starting new HTTP connection (1): 192.168.45.155:8000
+DEBUG:urllib3.connectionpool:http://192.168.45.155:8000 "POST /api/control_doorlock/ HTTP/1.1" 201 25
+INFO:root:doorlock_control: Starting
+DEBUG:urllib3.connectionpool:Starting new HTTP connection (1): 192.168.45.155:8000
+DEBUG:urllib3.connectionpool:http://192.168.45.155:8000 "POST /api/humi/ HTTP/1.1" 201 88
+DEBUG:urllib3.connectionpool:Starting new HTTP connection (1): 192.168.45.155:8000
+DEBUG:urllib3.connectionpool:http://192.168.45.155:8000 "POST /api/control_doorlock/ HTTP/1.1" 201 24
+INFO:root:doorlock_control: Starting
+DEBUG:urllib3.connectionpool:Starting new HTTP connection (1): 192.168.45.155:8000

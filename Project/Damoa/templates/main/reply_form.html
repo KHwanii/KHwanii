@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+  <div class="container my-3">
+    <h4 class="my-3 border-bottom pb-2">
+      <i class="fa-regular fa-pen-to-square"></i>
+      답변 등록
+    </h4>
+    <form method="post" class="post-form">
+      {% csrf_token %}
+      {% include "form_errors.html" %}
+      <div class="form-group">
+
+        <textarea class="form-control" name="content" id="content" rows="10">{{ form.content.value|default_if_none:''}}</textarea>
+      </div>
+      <button type="submit" class="btn btn-primary">
+        <i class="fa-solid fa-floppy-disk"></i>
+        저장</button>
+    </form>
+  </div>
+{% endblock %}

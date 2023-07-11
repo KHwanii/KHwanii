@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <!-- id가 목적지 ID -->
+        <item android:id="@+id/homeFragment"
+            android:title="Home"
+            android:icon="@drawable/ic_home"/>
+
+        <item android:id="@+id/VideoStreamFragment"
+            android:title="Smart Cam"
+            android:icon="@drawable/ic_smart_cam"/>
+
+        <item
+            android:id="@+id/DoorLockFragment"
+            android:icon="@drawable/ic_doorlock"
+            android:title="DoorLock" />
+        <item
+            android:id="@+id/TempHumidFragment"
+            android:icon="@drawable/ic_temp_humi"
+            android:title="Temp/Humi" />
+
+        <item android:id="@+id/CurtainFragment"
+            android:title="Curtain"
+            android:icon="@drawable/ic_curtain"/>
+
+    </group>
+</menu>

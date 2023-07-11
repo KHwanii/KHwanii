@@ -1,0 +1,12 @@
+{
+  "workbench.iconTheme": "material-icon-theme",
+  "editor.mouseWheelZoom": true,
+  "[python]": {
+    "editor.formatOnType": true
+  },
+  "terminal.integrated.defaultProfile.windows": "Command Prompt",
+  "editor.defaultFormatter": "Glavin001.unibeautify-vscode",
+  "editor.formatOnPaste": true,
+  "editor.formatOnSave": false,
+  "git.autofetch": true
+}
