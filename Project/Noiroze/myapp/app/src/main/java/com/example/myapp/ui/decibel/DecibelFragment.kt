@@ -9,20 +9,15 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.webkit.WebChromeClient
-import android.webkit.WebView
-import android.webkit.WebViewClient
 import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.core.content.res.ResourcesCompat
 import androidx.navigation.fragment.findNavController
+
 import com.example.myapp.R
 import com.example.myapp.databinding.FragmentDecibelBinding
-import com.example.myapp.ui.decibel.service.SLResult
-import com.example.myapp.ui.decibel.service.SoundLevel
-import com.example.myapp.ui.decibel.service.SoundLevelSetup
+
 import com.github.mikephil.charting.charts.BarChart
-import com.github.mikephil.charting.charts.Chart
 import com.github.mikephil.charting.charts.LineChart
 import com.github.mikephil.charting.components.Legend
 import com.github.mikephil.charting.components.LimitLine
@@ -30,19 +25,17 @@ import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.BarData
 import com.github.mikephil.charting.data.BarDataSet
 import com.github.mikephil.charting.data.BarEntry
-import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
+
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.text.SimpleDateFormat
+
 import java.time.LocalDateTime
-import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
 import java.util.Calendar
-import java.util.Locale
 
 class DecibelFragment : Fragment() {
     private var _binding : FragmentDecibelBinding? = null

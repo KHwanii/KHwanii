@@ -21,9 +21,9 @@
     </fragment>
     <fragment
         android:id="@+id/communityFragment"
-        android:name="com.example.myapp.ui.community.CommunityFragment"
+        android:name="com.example.myapp.ui.community.CommunityListFragment"
         android:label="fragment_community"
-        tools:layout="@layout/fragment_community" >
+        tools:layout="@layout/fragment_community_list" >
         <action
             android:id="@+id/action_communityFragment_to_boardDetailFragment"
             app:destination="@id/boardDetailFragment" />
@@ -58,9 +58,9 @@
         tools:layout="@layout/fragment_board_create" />
     <fragment
         android:id="@+id/complaintFragment"
-        android:name="com.example.myapp.ui.others.ComplaintFragment"
+        android:name="com.example.myapp.ui.others.ComplaintCreateFragment"
         android:label="fragment_complaint"
-        tools:layout="@layout/fragment_complaint" />
+        tools:layout="@layout/fragment_complaint_create" />
     <fragment
         android:id="@+id/noticeFragment"
         android:name="com.example.myapp.ui.others.NoticeFragment"

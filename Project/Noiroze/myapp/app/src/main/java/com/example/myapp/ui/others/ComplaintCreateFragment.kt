@@ -13,7 +13,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.fragment.findNavController
 
 import com.example.myapp.R
-import com.example.myapp.databinding.FragmentComplaintBinding
+import com.example.myapp.databinding.FragmentComplaintCreateBinding
 import com.example.myapp.ui.others.service.CreateComplainRequest
 import com.example.myapp.ui.others.service.NoticeComplain
 import com.google.android.material.bottomsheet.BottomSheetDialog
@@ -29,25 +29,25 @@ import java.util.Locale
 import java.util.TimeZone
 
 
-class ComplaintFragment : Fragment() {
+class ComplaintCreateFragment : Fragment() {
 
-    private var _binding : FragmentComplaintBinding? = null
+    private var _binding : FragmentComplaintCreateBinding? = null
     private val binding get() = _binding!!
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        _binding = FragmentComplaintBinding.inflate(inflater, container, false)
+        _binding = FragmentComplaintCreateBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val complain_title = binding.textSelectCategory
-        val button_cancel = binding.buttonCancel
-        val button_complete = binding.buttonComplete
-        val complain_content = binding.textComplainContent
+        val complainTitle = binding.textSelectCategory
+        val btnCancel = binding.buttonCancel
+        val btnComplete = binding.buttonComplete
+        val complainContent = binding.textComplainContent
 
-        complain_title.setOnClickListener {
+        complainTitle.setOnClickListener {
             val bottomSheetDialog = BottomSheetDialog(requireContext())
             val view = layoutInflater.inflate(R.layout.category_select_layout, null)
             bottomSheetDialog.setContentView(view)
@@ -61,18 +61,18 @@ class ComplaintFragment : Fragment() {
 
             listView.setOnItemClickListener { parent, view, position, id ->
                 val selectedItem = listItems[position]
-                complain_title.text = selectedItem
+                complainTitle.text = selectedItem
                 bottomSheetDialog.dismiss()
             }
         }
 
-        button_cancel.setOnClickListener {
+        btnCancel.setOnClickListener {
             findNavController().navigateUp() // 이전 화면으로 돌아갑니다.
         }
 
-        button_complete.setOnClickListener {
-            val title = complain_title.text.toString()          // 카테고리를 입력
-            val content = complain_content.text.toString()                   // 내용을 입력
+        btnComplete.setOnClickListener {
+            val title = complainTitle.text.toString()          // 카테고리를 입력
+            val content = complainContent.text.toString()                   // 내용을 입력
 
             if (title.isNotEmpty() && content.isNotEmpty()) {                                          // 각 필드가 비어있지 않은지 확인
                 val sharedPref = requireActivity().getSharedPreferences("LoginData", AppCompatActivity.MODE_PRIVATE)
@@ -94,7 +94,7 @@ class ComplaintFragment : Fragment() {
                         }
                     }
                     override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-                        Log.e("게시글 작성요청 실패! : ", t.message.toString())        // 요청이 실패하면 로그에 에러를 출력합니다.
+                        Log.e("네트워크 에러 : ", t.message.toString())        // 요청이 실패하면 로그에 에러를 출력합니다.
                     }
                 })
             }

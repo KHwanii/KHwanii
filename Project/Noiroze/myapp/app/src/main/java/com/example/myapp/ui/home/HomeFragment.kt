@@ -10,21 +10,18 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.annotation.RequiresApi
-import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.lifecycle.MutableLiveData
 import androidx.navigation.fragment.NavHostFragment
-import com.example.myapp.R
 
+import com.example.myapp.R
 import com.example.myapp.databinding.FragmentHomeBinding
-import com.example.myapp.ui.decibel.service.SoundLevel
-import com.example.myapp.ui.decibel.service.SoundLevelService
-import com.example.myapp.ui.decibel.service.SoundLevelSetup
-import com.example.myapp.ui.decibel.service.SoundVerified
-import com.google.firebase.messaging.FirebaseMessaging
-import com.google.firebase.messaging.RemoteMessage
+import com.example.myapp.login.LoginActivity.ToastManager.showToast
+import com.example.myapp.ui.decibel.SoundLevel
+import com.example.myapp.ui.decibel.SoundLevelService
+import com.example.myapp.ui.decibel.SoundLevelSetup
+import com.example.myapp.ui.decibel.SoundVerified
 
 import retrofit2.Call
 import retrofit2.Callback
@@ -56,28 +53,24 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // Handle back press
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
                 if (NavHostFragment.findNavController(this@HomeFragment).previousBackStackEntry != null) {
-                    // Go back to the previous fragment if it exists
                     NavHostFragment.findNavController(this@HomeFragment).navigateUp()
-                } else {
-                    // Double press to exit functionality
+                } // 이전 프래그먼트가 Null이 아닌경우(존재하는 경우) 뒤로가기
+                else {
                     if (doubleBackToExitPressedOnce) {
                         handler.removeCallbacks(doublePressRunnable)
                         isEnabled = false
                         requireActivity().onBackPressed()
                         return
                     }
-
                     doubleBackToExitPressedOnce = true
-                    Toast.makeText(requireContext(), "한번 더 누르면 종료합니다", Toast.LENGTH_SHORT).show()
-
+                    showToast(requireContext(), "한번 더 누르면 종료합니다")
                     handler.postDelayed(doublePressRunnable, 1500)
-                }
+                } // 이전 프래그먼트가 존재하지 않는 경우
             }
-        })
+        }) // 뒤로가기 버튼 동작 함수
 
         val timeSegment = when (currentTime.hour) {                         // 현재 시각 (시) 만 가져오기
             in 2 until 6 -> "새벽"             // 시간대 분류
@@ -251,7 +244,7 @@ class HomeFragment : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
-        handler.removeCallbacks(doublePressRunnable) // remove the Runnable when the view is destroyed
+        handler.removeCallbacks(doublePressRunnable) // 뒤로가기 버튼 동작함수 메모리에서 제거
         _binding = null
     }
 }

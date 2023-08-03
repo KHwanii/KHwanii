@@ -13,7 +13,7 @@ import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.fragment.findNavController
-import com.example.myapp.MainActivity.ToastManager.showToast
+import com.example.myapp.login.LoginActivity.ToastManager.showToast
 
 import com.example.myapp.R
 import com.example.myapp.databinding.FragmentBoardCreateBinding

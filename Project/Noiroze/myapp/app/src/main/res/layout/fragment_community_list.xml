@@ -5,7 +5,7 @@
     android:id="@+id/CommunityFragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.community.CommunityFragment">
+    tools:context=".ui.community.CommunityListFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout"

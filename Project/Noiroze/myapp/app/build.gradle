@@ -68,6 +68,9 @@ dependencies {
     implementation platform('com.google.firebase:firebase-bom:32.1.1')
     implementation 'com.google.firebase:firebase-analytics-ktx:21.3.0'
     implementation 'com.google.firebase:firebase-messaging:23.0.0'   // FCM 기능 추가
+
+    implementation 'com.squareup.moshi:moshi:1.9.2'
+    implementation 'com.squareup.retrofit2:converter-moshi:2.9.0'   // Retrofit2 Moshi Converter 의존성
 }
 
 apply plugin: 'com.android.application'

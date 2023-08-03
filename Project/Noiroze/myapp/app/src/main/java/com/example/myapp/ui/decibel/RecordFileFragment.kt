@@ -13,9 +13,6 @@ import com.example.myapp.R
 
 import com.example.myapp.databinding.FragmentRecordFileBinding
 import com.example.myapp.databinding.ItemRecordFileBinding
-import com.example.myapp.ui.decibel.service.SFResult
-import com.example.myapp.ui.decibel.service.SoundFile
-import com.example.myapp.ui.decibel.service.SoundLevelSetup
 
 import retrofit2.Call
 import retrofit2.Callback

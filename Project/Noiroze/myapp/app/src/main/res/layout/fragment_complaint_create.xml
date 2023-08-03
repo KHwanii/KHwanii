@@ -5,7 +5,7 @@
     android:id="@+id/complainFragmentFrame"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.others.ComplaintFragment">
+    tools:context=".ui.others.ComplaintCreateFragment">
 
 
     <ImageView
