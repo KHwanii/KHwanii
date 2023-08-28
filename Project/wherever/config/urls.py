@@ -17,12 +17,13 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
+from common import views
 
 urlpatterns = [
+    path('', views.redirect_login_page),                 # common/views.py 에서 만든 redirect 함수를 통해, 기본 페이지로 이동 시, 로그인 페이지로 이동하도록 설정
     path("admin/", admin.site.urls),
     path('api/', include('api.urls')),
     path('common/', include('common.urls')),
     path('wherever/', include('wherever.urls')),
-
     path('social-auth/', include('social_django.urls', namespace='social'))
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

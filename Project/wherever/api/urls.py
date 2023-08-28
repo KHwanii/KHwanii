@@ -14,4 +14,8 @@ router = routers.DefaultRouter()
 
 urlpatterns = [
     path('', include(router.urls)),
+    
+    path('user_register/', UserRegisterView.as_view(), name='user_register'),
+    path('user_login/', UserLoginView.as_view(), name='user_login'),
+    path('kakao_login/', KakaoLoginView.as_view(), name='kakao_login'),
 ]

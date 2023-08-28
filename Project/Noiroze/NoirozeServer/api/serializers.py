@@ -16,7 +16,7 @@ class UserSerializer(serializers.ModelSerializer):
     def create(self, validated_data):                      # 유저 생성 시 호출되는 함수
         password = validated_data.pop('password')
         user = super().create(validated_data)
-        user.set_password(password)                    # set_password는 Django의 AbstractBaseUser에서 제공하는 메서드로, 비밀번호를 안전하게 저장
+        user.set_password(password)                   # set_password는 Django의 AbstractBaseUser에서 제공하는 메서드로, 비밀번호를 안전하게 저장
         user.save()
         Token.objects.create(user=user)               # 사용자 생성 후 토큰 생성
         return user

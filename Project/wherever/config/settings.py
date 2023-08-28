@@ -30,7 +30,6 @@ ALLOWED_HOSTS = ['*']
 
 
 # Application definition
-
 INSTALLED_APPS = [
     "django.contrib.admin",
     "django.contrib.auth",
@@ -42,6 +41,9 @@ INSTALLED_APPS = [
     "common",
     "wherever",
     "social_django",
+    'rest_framework',
+    'rest_framework.authtoken',
+    'rest_framework_simplejwt',
 ]
 
 MIDDLEWARE = [
@@ -59,7 +61,7 @@ ROOT_URLCONF = "config.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [],
+        "DIRS": [BASE_DIR / 'templates'],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -140,4 +142,14 @@ AUTHENTICATION_BACKENDS = [
     'social_core.backends.kakao.KakaoOAuth2',       # OAuth2 인증설정 추가
 ]       # Django의 인증 메커니즘 설정
 
-SOCIAL_AUTH_KAKAO_KEY = os.environ.get('KAKAO_REST_API_KEY')
+
+
+import json
+
+# .config_secret 폴더에서 설정파일 불러오기
+config_path = os.path.join(os.path.dirname(__file__), '.config_secret', 'config.json')
+with open(config_path) as f:
+    config = json.load(f)
+
+KAKAO_REST_API_KEY = config["KAKAO_REST_API_KEY"]
+REDIRECT_URI = config["REDIRECT_URI"]
