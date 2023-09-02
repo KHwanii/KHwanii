@@ -50,8 +50,8 @@ class CustomUser(AbstractBaseUser, PermissionsMixin) :
     email = models.EmailField(unique=True, blank=False)
     name = models.CharField(max_length=15, blank=False)
     gender_choices = [
-        ('male', '남'),
-        ('female', '여'),
+        ('Male', '남'),
+        ('Female', '여'),
     ]
     gender = models.CharField(max_length=10, choices=gender_choices, blank=False)
     nationality_choices = [
@@ -65,7 +65,6 @@ class CustomUser(AbstractBaseUser, PermissionsMixin) :
     ]
     nationality = models.CharField(max_length=20, choices=nationality_choices, blank=False)
     
-
     is_active = models.BooleanField(default=True)
     is_superuser = models.BooleanField(default=False)
     is_staff = models.BooleanField(default=False)

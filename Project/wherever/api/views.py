@@ -4,6 +4,8 @@ from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from rest_framework_simplejwt.tokens import RefreshToken
 
+from django.shortcuts import redirect, render
+from django.conf import settings
 from django.contrib.auth import authenticate
 from common.models import CustomUser
 from api.serializers import UserRegisterSerializer, UserLoginSerializer
@@ -30,7 +32,7 @@ class UserLoginView(APIView) :
         })
 
 
-class UserLogoutView(APIView) :
+class UserLogoutView(APIView) :                 # 로그아웃 함수. 추후에 클라이언트로 옮길 예정
     permission_classes = [IsAuthenticated]
 
     def post(self, request):
@@ -38,9 +40,6 @@ class UserLogoutView(APIView) :
         refresh_token = request.data['refresh']
         token = RefreshToken(refresh_token)
         token.blacklist()
-
-        # 또는 다음과 같이 BlacklistedToken 모델을 직접 사용하여 추가할 수도 있습니다.
-        # BlacklistedToken.objects.create(token=refresh_token)
         
         return Response(status=204)  # No Content
     
@@ -50,11 +49,10 @@ def get_kakao_token(code):
     url = "https://kauth.kakao.com/oauth/token"
     payload = {
         "grant_type": "authorization_code",
-        "client_id": "YOUR_KAKAO_REST_API_KEY",
-        "redirect_uri": "YOUR_REDIRECT_URI",        # YOUR_SERVER_URL/kakao_login/ 로 리다이렉트 필요
+        "client_id": settings.KAKAO_REST_API_KEY,
+        "redirect_uri": settings.REDIRECT_URI,        # YOUR_SERVER_URL/kakao_login/ 로 리다이렉트 필요
         "code": code
     }
-    
     response = requests.post(url, data=payload)
     response_data = response.json()
     
@@ -70,28 +68,45 @@ def get_kakao_user_info(access_token):
     headers = {
         "Authorization": f"Bearer {access_token}"
     }
-    
     response = requests.get(url, headers=headers)
     response_data = response.json()
 
     # 에러 처리
     if "error" in response_data:
-        raise Exception("Failed to get Kakao user info")
+        raise Exception("사용자 정보 불러오기 실패 !")
 
     return response_data
 
 
 class KakaoLoginView(APIView):
     def get(self, request):
+        # print("실행확인")
         code = request.GET.get("code")
-        kakao_token = get_kakao_token(code)
-        kakao_user_info = get_kakao_user_info(kakao_token)
+        try:
+            kakao_token = get_kakao_token(code)
+            kakao_user_info = get_kakao_user_info(kakao_token)
+            # print(kakao_token)
+            # print(kakao_user_info)
 
-        user, created = CustomUser.objects.get_or_create(userid=kakao_user_info['id'])
+        except Exception as e:
+            # 예외가 발생한 경우 오류 메시지를 출력하고 500 (내부 서버 오류) 응답을 반환합니다.
+            print(f"Error: {e}")
+            return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
-        if created:
-            # 첫 로그인: 추가 정보를 입력받는 페이지로 리디렉션
-            return Response({"message": "Additional info required", "user_id": user.id}, status=status.HTTP_200_OK)
+        user, created = CustomUser.objects.get_or_create(
+            userid=kakao_user_info['id'],
+            defaults={
+                # 'name': kakao_user_info['name'],
+                # 'email': kakao_user_info['email']
+            }
+        )
+
+        if created or not user.gender or not user.nationality:
+            context = {
+                "user_id" : user.userid, 
+                "알림" : "추가 정보 입력이 필요합니다.",
+            }
+            return render(request, 'common/additional_info.html', context)
 
         # 기존 로그인 사용자: 토큰 발급
         refresh = RefreshToken.for_user(user)
@@ -99,3 +114,5 @@ class KakaoLoginView(APIView):
             'refresh': str(refresh),
             'token': str(refresh.access_token)
         })
+    
+
