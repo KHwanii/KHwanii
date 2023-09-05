@@ -30,10 +30,11 @@
 
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_icon"
-            android:resource="@mipmap/noiroze_app_icon" />
+            android:resource="@mipmap/noiroze_app_icon" />   <!-- FCM 푸쉬메세지 아이콘 -->
+
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_color"
-            android:resource="@color/black" />
+            android:resource="@color/black" />   <!-- FCM 푸쉬메세지 글자색 -->
 
         <activity
             android:name=".HomeActivity"
@@ -44,7 +45,6 @@
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

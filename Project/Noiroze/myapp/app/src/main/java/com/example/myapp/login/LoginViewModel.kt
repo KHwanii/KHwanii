@@ -50,5 +50,4 @@ class LoginViewModel : ViewModel() {
             }   // 이외의 오류 발생 시
         }
     }  // loginUser 함수
-
 } // LoginViewModel

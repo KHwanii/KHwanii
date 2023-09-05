@@ -14,7 +14,7 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.http.GET
 import retrofit2.http.Header
 
-val URL = "http://172.29.49.199:8000"       // 서버 URL 설정
+val URL = "http://172.29.51.87:8000"       // 서버 URL 설정
 // val URL = "http://192.168.45.135:8000"
 // val URL = "https://management.noiroze.com"
 
