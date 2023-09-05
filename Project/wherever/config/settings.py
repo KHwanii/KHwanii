@@ -135,6 +135,19 @@ AUTH_USER_MODEL = "common.CustomUser"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
+REST_FRAMEWORK = {
+    'DEFAULT_RENDERER_CLASSES': [
+        'rest_framework.renderers.JSONRenderer',
+    ],
+    
+    'DEFAULT_PARSER_CLASSES': [
+        'rest_framework.parsers.JSONParser',
+    ],
+
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE': 100
+}
+
 
 # 카카오톡 로그인 설정 openAPI
 AUTHENTICATION_BACKENDS = [
@@ -153,3 +166,15 @@ with open(config_path) as f:
 
 KAKAO_REST_API_KEY = config["KAKAO_REST_API_KEY"]
 REDIRECT_URI = config["REDIRECT_URI"]
+
+
+'''
+CORS_ALLOWED_ORIGINS = [
+    "https://management.noiroze.com",
+    "http://noiroze.com",
+    "http://localhost:8000",
+    "http://127.0.0.1:8000"
+]           # CORS 정책 허용
+
+CSRF_TRUSTED_ORIGINS = ['실제 사이트 주소']
+'''

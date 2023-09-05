@@ -68,47 +68,48 @@
             </nav>
         </div>
 </body>
+
 <script>
-document.addEventListener('DOMContentLoaded', function() {
-    updateLoginStatus();
-});
+    document.addEventListener('DOMContentLoaded', function() {
+        updateLoginStatus();
+    });
 
-function updateLoginStatus() {
-    const authToken = localStorage.getItem("auth-token");
-    const loginStatus = document.getElementById("loginStatus");
+    function updateLoginStatus() {
+        const authToken = localStorage.getItem("auth-token");
+        const loginStatus = document.getElementById("loginStatus");
 
-    if (authToken) {
-        loginStatus.textContent = "계정 활성화";
-    } else {
-        loginStatus.textContent = "로그인이 필요합니다";
+        if (authToken) {
+            loginStatus.textContent = "계정 활성화";
+        } else {
+            loginStatus.textContent = "로그인이 필요합니다";
+        }
     }
-}
-function navigateToDashboard() {
-    if (isAuthenticated()) {
-        window.location.href = "{% url 'main:dashboard' %}";
+    function navigateToDashboard() {
+        if (isAuthenticated()) {
+            window.location.href = "{% url 'main:dashboard' %}";
+        }
     }
-}
 
-function navigateToDong() {
-    if (isAuthenticated()) {
-        window.location.href = "{% url 'main:dong_101' %}";
+    function navigateToDong() {
+        if (isAuthenticated()) {
+            window.location.href = "{% url 'main:dong_101' %}";
+        }
     }
-}
 
-function navigateToComplainBoardList() {
-    if (isAuthenticated()) {
-        window.location.href = "{% url 'main:complain_board_list' %}";
+    function navigateToComplainBoardList() {
+        if (isAuthenticated()) {
+            window.location.href = "{% url 'main:complain_board_list' %}";
+        }
     }
-}
 
-function navigateToCommunityBoardList() {
-    if (isAuthenticated()) {
-        window.location.href = "{% url 'main:community_board_list' %}";
+    function navigateToCommunityBoardList() {
+        if (isAuthenticated()) {
+            window.location.href = "{% url 'main:community_board_list' %}";
+        }
     }
-}
 
-function isAuthenticated() {
-    const authToken = localStorage.getItem("auth-token");
-    return authToken !== null;
-}
+    function isAuthenticated() {
+        const authToken = localStorage.getItem("auth-token");
+        return authToken !== null;
+    }
 </script>
