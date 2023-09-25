@@ -1,3 +1,4 @@
+'''
 from .base import *
 
 # secret setting
@@ -11,5 +12,5 @@ DATABASES = {
         "NAME": BASE_DIR / "db.sqlite3",
     }
 }
-
+'''
 

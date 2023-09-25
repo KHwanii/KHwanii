@@ -40,6 +40,8 @@ INSTALLED_APPS = [
     "api",
     "common",
     "pingshop",
+    "social_django",
+    "rest_framework_simplejwt",
 ]
 
 MIDDLEWARE = [
@@ -121,6 +123,9 @@ import os
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
 STATIC_URL = "static/"
+STATICFILES_DIRS = [
+    BASE_DIR / 'static',
+]
 
 MEDIA_URL = "/media/"
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
@@ -134,6 +139,40 @@ AUTHENTICATION_BACKENDS = [
 ]       # Django의 인증 메커니즘 설정
 
 
+# REST 프레임워크 설정
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [ # Authentication 인증 SimpleJWT 사용
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ],
+
+    'DEFAULT_RENDERER_CLASSES': [
+        'rest_framework.renderers.JSONRenderer',
+    ],
+    
+    'DEFAULT_PARSER_CLASSES': [
+        'rest_framework.parsers.JSONParser',
+    ],
+    
+    # API 페이지네이션 설정
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',       
+    'PAGE_SIZE': 100
+}
+
+from datetime import timedelta
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=30),
+    'SLIDING_TOKEN_REFRESH_LIFETIME': timedelta(days=1),
+    'ROTATE_REFRESH_TOKENS': False,
+    'ALGORITHM': 'HS256',
+    'SIGNING_KEY': SECRET_KEY,
+    'VERIFYING_KEY': None,
+    'AUTH_HEADER_TYPES': ('Bearer',),
+    'USER_ID_FIELD': 'id',
+    'USER_ID_CLAIM': 'user_id',
+    'AUTH_TOKEN_CLASSES': ('rest_framework_simplejwt.tokens.AccessToken',),
+    'TOKEN_TYPE_CLAIM': 'token_type',
+}
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
@@ -143,7 +182,6 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 
 import json
-
 # .config_secret 폴더에서 설정파일 불러오기
 config_path = os.path.join(os.path.dirname(__file__), '.config_secret', 'config.json')
 with open(config_path) as f:
@@ -151,3 +189,10 @@ with open(config_path) as f:
 
 KAKAO_REST_API_KEY = config["KAKAO_REST_API_KEY"]
 REDIRECT_URI = config["REDIRECT_URI"]
+KAKAO_AUTHORIZATION_URL = 'https://kauth.kakao.com/oauth/authorize'
+KAKAO_ACCESS_TOKEN_URL = 'https://kauth.kakao.com/oauth/token'
+KAKAO_USER_PROFILE_URL = 'https://kapi.kakao.com/v2/user/me'
+
+# AWS 설정키
+# AWS_ACCESS_KEY_ID = config["AWS_ACCESS_KEY"]
+# AWS_SECRET_ACCESS_KEY = config["AWS_SECRET_ACCESS_KEY"]

@@ -1,3 +1,4 @@
+'''
 import os
 
 # base dir: config's parent directory
@@ -149,3 +150,4 @@ REDIRECT_URI = config["REDIRECT_URI"]
 # AWS 설정키
 # AWS_ACCESS_KEY_ID = config["AWS_ACCESS_KEY"]
 # AWS_SECRET_ACCESS_KEY = config["AWS_SECRET_ACCESS_KEY"]
+'''

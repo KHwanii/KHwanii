@@ -90,61 +90,48 @@
   
 
 <script>
-  $(document).ready(function() {
-    $('#login-form').on('submit', function(e) {
-        e.preventDefault(); // Prevent the form from submitting via the browser.
+  document.getElementById('login-form').addEventListener('submit', function(e) {
+      e.preventDefault();
 
-        var form = $(this);
-        var url = form.attr('action');
+      var url = this.action;
+      var data = {
+          userid: document.getElementById('userid').value,        // 아이디 입력
+          password: document.getElementById('password').value     // 비밀번호 입력
+      };
 
-        $.ajax({
-            type: 'POST',
-            url: url,
-            async: false, // 추가
-            contentType: 'application/json; charset=utf-8',
-            data: JSON.stringify({
-                userid: $('#userid').val(),
-                password: $('#password').val()
-            }),
-            dataType: 'json',
-            beforeSend: function(xhr) {
-                // csrf 토큰을 위한 코드 추가
-                xhr.setRequestHeader("X-CSRFToken", getCookie('csrftoken'));
-            },
-            success: function(data) {
-                window.localStorage.setItem('auth-token', data.token); // Save the token
-
-                alert('로그인에 성공하였습니다.');
-                window.location.href = "/main/base";  // redirect to the main page
-            },
-            error: function (request, status, error) {
-                alert('로그인에 실패하였습니다. 아이디 또는 비밀번호를 확인해주세요.');  
-                window.location.href = "/common/login";  // redirect back to the login page
-            }
-        });
-    });
-    
-    $.ajaxSetup({
-        beforeSend: function(xhr, settings) {
-            // if (!/^(GET|HEAD|OPTIONS|TRACE)$/i.test(settings.type) && !this.crossDomain) // 해당하는 옵션 및 크로스 도메인인 경우에는 '제외'시킴
-            xhr.setRequestHeader("X-CSRFToken", getCookie('csrftoken'));
-            const token = window.localStorage.getItem('auth-token'); // Add the token in the Authorization header
-            console.log("Token:", token); // 로그 추가
-            if (token) {
-                xhr.setRequestHeader("Authorization", `Token ${token}`);
-            }
-        }
-    });
+      fetch(url, {            // url로 fetch실행
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/json; charset=utf-8',
+              "X-CSRFToken": getCookie('csrftoken')
+          },
+          body: JSON.stringify(data)
+      })
+      .then(response => {
+          if (!response.ok) {
+              throw new Error('로그인에 실패하였습니다. 아이디 또는 비밀번호를 확인해주세요.');
+          }
+          return response.json();
+      })
+      .then(data => {
+          // window.localStorage.setItem('auth-token', data.access_token);   // 로컬 스토리지에 쿠키 저장
+          alert('로그인에 성공하였습니다.');
+          window.location.href = "/main/base";
+      })
+      .catch(error => {
+          alert(error.message);
+          window.location.href = "/common/login";
+      });
   });
 
   function getCookie(name) {
-      let cookieValue = null;
-      if (document.cookie && document.cookie !== '') {
-          const cookies = document.cookie.split(';');
+      let cookieValue = null;                                   // 쿠키 저장 변수
+      if (document.cookie && document.cookie !== '') {          // 쿠기가 존재, 비어있지 않은 경우
+          const cookies = document.cookie.split(';');           // ; 를 기준으로 쿠키를 구분지어 확인
           for (let i = 0; i < cookies.length; i++) {
-              const cookie = jQuery.trim(cookies[i]);
-              if (cookie.substring(0, name.length + 1) === (name + '=')) { // Does this cookie string begin with the name we want?
-                  cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+              const cookie = jQuery.trim(cookies[i]);           // 쿠키 양 끝 공백 제거
+              if (cookie.substring(0, name.length + 1) === (name + '=')) {              // 현재 순회 중인 쿠키의 이름이 우리가 찾고자 하는 이름과 일치하는지 확인
+                  cookieValue = decodeURIComponent(cookie.substring(name.length + 1));  // 일치하는 경우, 쿠키값 저장
                   break;
               }
           }

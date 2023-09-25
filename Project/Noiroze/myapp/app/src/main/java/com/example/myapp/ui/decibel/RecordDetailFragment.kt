@@ -35,31 +35,29 @@ class RecordDetailFragment : Fragment() {
         val playPauseButton = binding.playPauseButton
 
         playPauseButton.setOnClickListener {
-            if (mediaPlayer == null) {
-                // MediaPlayer가 아직 초기화되지 않았다면, 여기에서 초기화합니다.
-                progressBar.visibility = View.VISIBLE  // ProgressBar를 보이게 합니다.
-                val audioUrl = arguments?.getString("sound_file")  // 이전 프래그먼트에서 전달받은 URL
+            if (mediaPlayer == null) {                                  // MediaPlayer 초기화
+                progressBar.visibility = View.VISIBLE                     // ProgressBar 보이게 설정
+                val audioUrl = arguments?.getString("sound_file")    // 이전 프래그먼트에서 전달받은 URL
                 mediaPlayer = MediaPlayer().apply {
-                    setDataSource(audioUrl)  // 오디오 스트림의 위치를 설정합니다.
+                    setDataSource(audioUrl)                             // 오디오 스트림의 위치 설정
                     setOnPreparedListener {
-                        progressBar.visibility = View.INVISIBLE  // 준비가 끝나면 ProgressBar를 숨깁니다.
-                        start()  // 오디오를 재생합니다.
+                        progressBar.visibility = View.INVISIBLE         // 준비가 끝나면 ProgressBar를 숨김
+                        start()                                         // 오디오를 재생
                     }
-                    setOnCompletionListener {
-                        // 오디오 재생이 완료되면 MediaPlayer를 해제하고, 버튼의 텍스트를 변경합니다.
+                    setOnCompletionListener {                           // 오디오 재생이 완료되면 MediaPlayer를 해제, 버튼의 텍스트 변경
                         release()
                         mediaPlayer = null
                         playPauseButton.text = "재생"
                     }
-                    prepareAsync()  // MediaPlayer를 비동기적으로 준비합니다.
+                    prepareAsync()                                      // MediaPlayer를 준비. (비동기)
                 }
                 playPauseButton.text = "일시정지"
-            } else if (mediaPlayer!!.isPlaying) {
-                // 오디오가 재생 중이라면 일시정지합니다.
+            }
+            else if (mediaPlayer!!.isPlaying) {                         // 오디오가 재생 중이라면 일시정지
                 mediaPlayer?.pause()
                 playPauseButton.text = "다시 재생"
-            } else {
-                // 오디오가 일시정지 상태라면 재생을 계속합니다.
+            }
+            else {    // 오디오가 일시정지 상태라면 다시 재생
                 mediaPlayer?.start()
                 playPauseButton.text = "일시정지"
             }

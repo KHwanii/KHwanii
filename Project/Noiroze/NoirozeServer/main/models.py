@@ -156,12 +156,13 @@ class Sound_Level_Verified(models.Model):
 
 class CommunityBoard(models.Model):                                                                       # 커뮤니티 게시판 모델
     CATEGORY_CHOICES = (
+        ('전체보기', '전체보기'),
         ('정보공유', '정보공유'),
         ('소통해요', '소통해요'),
         ('칭찬해요', '칭찬해요'),
         ('나눔해요', '나눔해요'),
     )
-    category = models.CharField('게시판 카테고리', max_length=10, choices=CATEGORY_CHOICES, default='정보공유')    # 카테고리
+    category = models.CharField('게시판 카테고리', max_length=10, choices=CATEGORY_CHOICES, default='전체보기')    # 카테고리
     title = models.CharField('게시판 제목', max_length=200)                                                       # 제목
     content = models.TextField('게시판 내용')                                                                     # 내용
     author = models.ForeignKey(CustomUser, on_delete=models.CASCADE)                                             # 작성자

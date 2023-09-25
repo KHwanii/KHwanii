@@ -7,10 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 
 import com.example.myapp.databinding.FragmentBoardDetailBinding
-
-import java.text.SimpleDateFormat
-import java.util.Date
-import java.util.Locale
+import com.example.myapp.login.monthDayHourMinChange
 
 
 class BoardDetailFragment : Fragment() {
@@ -24,18 +21,21 @@ class BoardDetailFragment : Fragment() {
         val title = arguments?.getString("title")
         val category = arguments?.getString("category")
         val author = arguments?.getString("author")
-        val createdDate = arguments?.getString("createdDate")
+        val createdDate = arguments?.getString("created_date")
         val content = arguments?.getString("content")
-
-        val originalFormat = SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy", Locale.ENGLISH)
-        val targetFormat = SimpleDateFormat("M월 d일 HH시 mm분", Locale.KOREAN)
+/*
+        val originalFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssXXX", Locale.ENGLISH)       // 서버에서 받는 날짜 데이터 형식
+        val targetFormat = SimpleDateFormat("M월 d일 HH시 mm분", Locale.KOREAN)                   // 어플에서 변환할 날짜 데이터 형식
 
         val date: Date = originalFormat.parse(createdDate)
         val formattedDate: String = targetFormat.format(date)
+*/
 
+        binding.detailTitle.text = title
         binding.detailCategory.text = category
         binding.detailAuthor.text = author
-        binding.detailCreatedTime.text = formattedDate
+        binding.detailCreatedTime.text = monthDayHourMinChange(createdDate!!)       // 날짜 데이터 변환 함수
+        // binding.detailCreatedTime.text = formattedDate
         binding.detailContent.text = content
 
         return binding.root

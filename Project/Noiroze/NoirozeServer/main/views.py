@@ -10,10 +10,6 @@ from django.contrib import messages
 
 
 
-
-
-
-
 # 기본 render 함수
 def base_request(request):
     return render(request, 'base.html')
@@ -59,7 +55,6 @@ def download_sound_file(request):
 ######### ######### ######### ######### ######### ######### ######### ######### 커뮤니티 보드######### ######### ######### ######### ######### ######### ######### ######### 
 # 커뮤니티 게시판 리스트 
 def community_board_list(request):
-    
     # 입력 인자
     page = request.GET.get('page', '1')  # 페이지
     kw = request.GET.get('kw', '')  # 검색어
@@ -87,7 +82,6 @@ def community_board_list(request):
     Q(content__icontains=kw) |  # 내용 검색
     Q(author__name__icontains=kw)  # 작성자 검색
     ).distinct()
-
 
     paginator = Paginator(board_list, 10)  # 페이지당 10개
     page_obj = paginator.get_page(page)

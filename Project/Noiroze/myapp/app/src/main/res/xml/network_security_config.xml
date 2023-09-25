@@ -1,8 +1,8 @@
 <network-security-config>
     <domain-config cleartextTrafficPermitted="true">
         <!-- 해당 도메인으로 API서버 요청 허용 -->
-        <domain includeSubdomains="true">192.168.45.107</domain>
-        <domain includeSubdomains="true">172.29.51.87</domain>
+        <domain includeSubdomains="true">192.168.45.48</domain>
+        <domain includeSubdomains="true">172.29.49.230</domain>
         <domain includeSubdomains="true">noiroze.com</domain>
     </domain-config>
 </network-security-config>

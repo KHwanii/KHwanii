@@ -42,7 +42,6 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     'rest_framework',
-    'rest_framework.authtoken',
     'rest_framework_simplejwt',
     'corsheaders',
 ]
@@ -158,19 +157,30 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 AUTH_USER_MODEL = "common.CustomUser"
 
 REST_FRAMEWORK = {
-    'DEFAULT_PERMISSION_CLASSES' : [              # 기본적인 View 접근권한 설정
-        'rest_framework.permissions.AllowAny',
+    'DEFAULT_PERMISSION_CLASSES' : [                    # 기본적인 View 접근권한 설정
+        'rest_framework.permissions.AllowAny',        # 모든 사용자에 대해 접근허용
+        # 'rest_framework.permissions.IsAuthenticated',   # 토큰검증된 사용자만 접근 허용
     ],
-    'DEFAULT_AUTHENTICATION_CLASSES': [           # session 또는 token을 인증 할 클래스 설정
-        'rest_framework.authentication.TokenAuthentication',
-        'rest_framework.authentication.SessionAuthentication',
+    'DEFAULT_AUTHENTICATION_CLASSES': [                 # session 또는 token을 인증 할 클래스 설정
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ],
-    'DEFAULT_PARSER_CLASSES' : [                 # request.data 속성에 접근 할 때 사용되는 파서 지정
+    'DEFAULT_PARSER_CLASSES' : [                        # request.data 속성에 접근 할 때 사용되는 파서 지정
         'rest_framework.parsers.JSONParser',
-        'rest_framework.parsers.FormParser',
-        'rest_framework.parsers.MultiPartParser',
     ],
+}
+
+from datetime import timedelta
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=60),
+    'ROTATE_REFRESH_TOKENS': False,
+    'ALGORITHM': 'HS256',
+    'SIGNING_KEY': SECRET_KEY,
+    'VERIFYING_KEY': None,
+    'AUTH_HEADER_TYPES': ('Bearer',),
+    'USER_ID_FIELD': 'id',
+    'USER_ID_CLAIM': 'user_id',
+    'AUTH_TOKEN_CLASSES': ('rest_framework_simplejwt.tokens.AccessToken',),
+    'TOKEN_TYPE_CLAIM': 'token_type',
 }
 
 

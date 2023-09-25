@@ -1,0 +1,2 @@
+Pillow
+social-auth-app-django

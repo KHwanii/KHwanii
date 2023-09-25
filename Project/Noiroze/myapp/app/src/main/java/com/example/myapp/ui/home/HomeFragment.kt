@@ -106,9 +106,10 @@ class HomeFragment : Fragment() {
     fun requestSound(page: Int, callback: (SoundLevel?) -> Unit) {
         val sharedPref = requireContext().getSharedPreferences("LoginData", Context.MODE_PRIVATE)
         val token = sharedPref.getString("token", null)
+        val user_ho = sharedPref.getString("user_ho", null)
         if (token != null) {
             val soundLevelService: SoundLevelService = SoundLevelSetup.service
-            val call = soundLevelService.getSoundLevelHome("Token $token", null, page)
+            val call = soundLevelService.getSoundLevelHome("Bearer $token", "$user_ho",null, page)
             call.enqueue(object : Callback<SoundLevel> {
                 override fun onResponse(call: Call<SoundLevel>, response: Response<SoundLevel>) {
                     if(response.isSuccessful) {

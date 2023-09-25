@@ -33,7 +33,7 @@ class CustomUserManager(UserManager) :
             raise ValueError('이메일은 필수항목입니다.')
         if extra_fields.get('name') == '':
             raise ValueError('이름은 필수항목입니다.')
-        if extra_fields.get('gender') not in ('male', 'female'):
+        if extra_fields.get('gender') not in ('Male', 'Female'):
             raise ValueError('성별은 필수항목입니다.')
         if extra_fields.get('nationality') not in ('America', 'Korea', 'Japan', 'China', 'France', 'England', 'Germany'):
             raise ValueError('국적은 필수항목이며, 선택지 중 하나를 입력해야 합니다.')      # 입력받은 값이 없으면 필수로 다시 입력하도록 함

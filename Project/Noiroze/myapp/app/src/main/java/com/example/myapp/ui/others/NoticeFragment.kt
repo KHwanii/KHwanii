@@ -66,7 +66,7 @@ class NoticeFragment : Fragment() {
     } // onViewCreated
 
     private fun loadNoticeData(page : Int) {
-        val noticeBoardList = NoticeComplain.noticeservice.requestNoticeList(1)
+        val noticeBoardList = NoticeComplain.noticeService.requestNoticeList(1)
         noticeBoardList.enqueue(object : Callback<NoticeBoards>{
             override fun onResponse(call: Call<NoticeBoards>, response: Response<NoticeBoards>) {
                 if(response.isSuccessful) {                                                                 // 성공했을 때. 즉, 네트워크 응답으로 데이터가 앱으로 전달될 때.

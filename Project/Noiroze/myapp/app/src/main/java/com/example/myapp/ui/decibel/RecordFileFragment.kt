@@ -52,7 +52,7 @@ class RecordFileFragment : Fragment() {
         val token = sharedPref.getString("token", null)
         isLoading = true
         // api 호출 기본 골격 retrofit으로 서버에서 BoardList 목록을 가져옴
-        val fileList = SoundLevelSetup.service.getSoundRecordFile("Token $token", page)
+        val fileList = SoundLevelSetup.service.getSoundRecordFile("Bearer $token", page)
         fileList.enqueue(object : Callback<SoundFile> {
             override fun onResponse(call: Call<SoundFile>, response: Response<SoundFile>) {
                 if(response.isSuccessful) {                                                                 // 성공했을 때. 즉, 네트워크 응답으로 데이터가 앱으로 전달될 때.

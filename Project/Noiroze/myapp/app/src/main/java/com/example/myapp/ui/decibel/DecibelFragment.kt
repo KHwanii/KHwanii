@@ -83,7 +83,11 @@ class DecibelFragment : Fragment() {
     }
 
     private fun getDongData(page: Int, callback: (List<SLResult>) -> Unit) {
-        val soundDongData = SoundLevelSetup.service.getSoundLevelDong("101", null, page)
+        val sharedPref = requireContext().getSharedPreferences("LoginData", Context.MODE_PRIVATE)
+        val token = sharedPref.getString("token", null)
+        val user_dong = sharedPref.getString("user_dong", null)
+
+        val soundDongData = SoundLevelSetup.service.getSoundLevelDong("Bearer $token","$user_dong", null, page)
         soundDongData.enqueue(object : Callback<SoundLevel> {
             override fun onResponse(call: Call<SoundLevel>, response: Response<SoundLevel>) {
                 if (response.isSuccessful) {
@@ -136,26 +140,26 @@ class DecibelFragment : Fragment() {
 
                 // X축 설정
                 val DongxAxis = dongChart.xAxis
-                DongxAxis.position = XAxis.XAxisPosition.BOTTOM // X축을 아래에 위치시킵니다.
-                DongxAxis.setDrawAxisLine(true) // X축 선을 그립니다.
-                DongxAxis.setDrawGridLines(true) // 그리드 선을 그리지 않습니다.
-                // DongxAxis.setDrawLabels(false)                   // X축 레이블 제거
+                DongxAxis.position = XAxis.XAxisPosition.BOTTOM             // X축을 아래에 위치
+                DongxAxis.setDrawAxisLine(true)                             // X축 선 그리기
+                DongxAxis.setDrawGridLines(true)                            // 그리드 선 제거
+                // DongxAxis.setDrawLabels(false)                           // X축 레이블 제거
                 DongxAxis.valueFormatter = IndexAxisValueFormatter(arrayListOf("", "", "", "", "", "", "")) // X축 레이블 설정
                 DongxAxis.textSize = 14f
                 DongxAxis.setLabelCount(7, true)
 
                 // Y축 왼쪽 설정
                 val DongyAxisLeft = dongChart.axisLeft
-                DongyAxisLeft.setDrawAxisLine(true) // Y축 선을 그립니다.
-                DongyAxisLeft.setDrawGridLines(true) // 그리드 선을 그리지 않습니다.
+                DongyAxisLeft.setDrawAxisLine(true)                         // Y축 선 그리기
+                DongyAxisLeft.setDrawGridLines(true)                        // 그리드 선 제거
                 DongyAxisLeft.axisMinimum = 30f
 
                 // Y축 오른쪽 설정
                 val DongyAxisRight = dongChart.axisRight
-                DongyAxisRight.isEnabled = false // Y축 오른쪽 비활성화
+                DongyAxisRight.isEnabled = false                            // Y축 오른쪽 비활성화
 
                 dongChart.data = dongData
-                dongChart.invalidate() // refresh chart
+                dongChart.invalidate()                                      // 차트 새로고침
             }
         }
     }         // drawDongChart
@@ -163,8 +167,9 @@ class DecibelFragment : Fragment() {
     private fun getHoData(page: Int, callback: (List<SLResult>) -> Unit) {
         val sharedPref = requireContext().getSharedPreferences("LoginData", Context.MODE_PRIVATE)
         val token = sharedPref.getString("token", null)
+        val user_ho = sharedPref.getString("user_ho", null)
 
-        val soundDongData = SoundLevelSetup.service.getSoundLevelHome("Token $token", null, page)
+        val soundDongData = SoundLevelSetup.service.getSoundLevelHome("Bearer $token", "$user_ho",null, page)
         soundDongData.enqueue(object : Callback<SoundLevel> {
             override fun onResponse(call: Call<SoundLevel>, response: Response<SoundLevel>) {
                 if (response.isSuccessful) {
@@ -219,9 +224,9 @@ class DecibelFragment : Fragment() {
 
                 // X축 설정
                 val HoxAxis = hoChart.xAxis
-                HoxAxis.position = XAxis.XAxisPosition.BOTTOM // X축을 아래에 위치시킵니다.
-                HoxAxis.setDrawAxisLine(true) // X축 선을 그립니다.
-                HoxAxis.setDrawGridLines(true) // 그리드 선을 그리지 않습니다.
+                HoxAxis.position = XAxis.XAxisPosition.BOTTOM                   // X축을 아래에 위치
+                HoxAxis.setDrawAxisLine(true)                                   // X축 선 그리기
+                HoxAxis.setDrawGridLines(true)                                  // 그리드 선 제거
                 // HoxAxis.setDrawLabels(false)
                 HoxAxis.valueFormatter = IndexAxisValueFormatter(arrayListOf("", "", "", "", "", "", "")) // X축 레이블 설정
                 HoxAxis.textSize = 14f
@@ -229,16 +234,16 @@ class DecibelFragment : Fragment() {
 
                 // Y축 왼쪽 설정
                 val HoyAxisLeft = hoChart.axisLeft
-                HoyAxisLeft.setDrawAxisLine(true) // Y축 선을 그립니다.
-                HoyAxisLeft.setDrawGridLines(true) // 그리드 선을 그리지 않습니다.
+                HoyAxisLeft.setDrawAxisLine(true)                               // Y축 선 그리기
+                HoyAxisLeft.setDrawGridLines(true)                              // 그리드 선 제거
                 HoyAxisLeft.axisMinimum = 30f
 
                 // Y축 오른쪽 설정
                 val HoyAxisRight = hoChart.axisRight
-                HoyAxisRight.isEnabled = false // Y축 오른쪽 비활성화
+                HoyAxisRight.isEnabled = false                                  // Y축 오른쪽 비활성화
 
                 hoChart.data = hoData
-                hoChart.invalidate()  // refresh chart
+                hoChart.invalidate()                                            // 차트 새로고침
             }
         }
     }
@@ -246,15 +251,15 @@ class DecibelFragment : Fragment() {
     @RequiresApi(Build.VERSION_CODES.O)
     fun AveragePerPeriod(data: List<SLResult>): FloatArray {
         val periodRanges = arrayOf(2..6, 6..10, 10..14, 14..18, 18..22, 22..26)
-        val sums = FloatArray(periodRanges.size) { 0f }              // Initialize an array to hold the sum of values in each period
-        val counts = IntArray(periodRanges.size) { 0 }               // Initialize an array to hold the count of values in each period
+        val sums = FloatArray(periodRanges.size) { 0f }              // 각 구간별 합계 변수
+        val counts = IntArray(periodRanges.size) { 0 }               // 각 구간 갯수 카운트 변수
 
         for (soundLevel in data) {
             val dateTime = parseDateTime(soundLevel.created_at)
             val hour = if (dateTime.hour < 2) dateTime.hour + 24 else dateTime.hour
             val periodIndex = periodRanges.indexOfFirst { range -> hour in range }           // Compute the period index based on the hour of the timestamp
 
-            sums[periodIndex] += soundLevel.value.toFloat()                                    // Update the sum and count for the period
+            sums[periodIndex] += soundLevel.value.toFloat()                                  // Update the sum and count for the period
             counts[periodIndex]++
         }
 
@@ -273,10 +278,9 @@ class DecibelFragment : Fragment() {
         ll.textSize = 12f
 
         val leftAxis = chart.axisLeft
-        // 이전에 추가된 LimitLine이 있다면 삭제
-        leftAxis.removeAllLimitLines()
-        // 새로운 LimitLine 추가
-        leftAxis.addLimitLine(ll)
+
+        leftAxis.removeAllLimitLines()      // 이전에 추가된 LimitLine이 있다면 삭제
+        leftAxis.addLimitLine(ll)           // 새로운 LimitLine 추가
     }
 
     fun setLimitHo(chart: LineChart) {
@@ -290,10 +294,9 @@ class DecibelFragment : Fragment() {
         ll.textSize = 12f
 
         val leftAxis = chart.axisLeft
-        // 이전에 추가된 LimitLine이 있다면 삭제
-        leftAxis.removeAllLimitLines()
-        // 새로운 LimitLine 추가
-        leftAxis.addLimitLine(ll)
+
+        leftAxis.removeAllLimitLines()      // 이전에 추가된 LimitLine이 있다면 삭제
+        leftAxis.addLimitLine(ll)           // 새로운 LimitLine 추가
     }
 
     override fun onDestroyView() {

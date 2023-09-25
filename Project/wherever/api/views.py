@@ -4,9 +4,8 @@ from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from rest_framework_simplejwt.tokens import RefreshToken
 
-from django.shortcuts import redirect, render
+from django.shortcuts import render
 from django.conf import settings
-from django.contrib.auth import authenticate
 from common.models import CustomUser
 from api.serializers import UserRegisterSerializer, UserLoginSerializer
 import requests
@@ -35,12 +34,7 @@ class UserLoginView(APIView) :
 class UserLogoutView(APIView) :                 # 로그아웃 함수. 추후에 클라이언트로 옮길 예정
     permission_classes = [IsAuthenticated]
 
-    def post(self, request):
-        # Refresh 토큰을 블랙리스트에 추가
-        refresh_token = request.data['refresh']
-        token = RefreshToken(refresh_token)
-        token.blacklist()
-        
+    def post(self):
         return Response(status=204)  # No Content
     
 

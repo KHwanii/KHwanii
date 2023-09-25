@@ -7,7 +7,7 @@ import com.google.gson.annotations.SerializedName
 
 import retrofit2.Call
 import retrofit2.Retrofit
-import retrofit2.converter.moshi.MoshiConverterFactory
+import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.Query
@@ -16,7 +16,7 @@ object SoundLevelSetup {
     private val retrofit = Retrofit.Builder()    // retrofit 인스턴스 생성
         .baseUrl(URL)  //  API 서버가 실행 중인 컴퓨터의 IP 주소를 기본 url로 지정
         .client(client)
-        .addConverterFactory(MoshiConverterFactory.create())    // json을 java 객체로 변환하기 위한 Gson
+        .addConverterFactory(GsonConverterFactory.create())    // json을 java 객체로 변환하기 위한 Gson
         .build()
 
     val service get() = retrofit.create(SoundLevelService::class.java)
@@ -26,6 +26,7 @@ interface SoundLevelService {
     @GET("/api/sound_level/")        // retrofit의 get 이노테이션 사용- GET 요청
     fun getSoundLevelHome(
         @Header("Authorization") token: String,
+        @Query("ho") ho: String,
         @Query("date") date: String?,
         @Query("page") page: Int
     ) : Call<SoundLevel>
@@ -35,6 +36,7 @@ interface SoundLevelService {
 
     @GET("/api/sound_level/")
     fun getSoundLevelDong(
+        @Header("Authorization") token: String,
         @Query("dong") dong: String,
         @Query("date") date: String?,
         @Query("page") page: Int

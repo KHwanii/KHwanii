@@ -4,7 +4,6 @@ from django.contrib.auth import authenticate
 from rest_framework import serializers
 from common.models import CustomUser
 from main.models import Sound_Level, Sound_File, Sound_Level_Verified, CommunityBoard, ComplainBoard, Reply, NoticeBoard
-from rest_framework.authtoken.models import Token
 
 class UserSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True)  # 비밀번호 필드 추가
@@ -18,7 +17,6 @@ class UserSerializer(serializers.ModelSerializer):
         user = super().create(validated_data)
         user.set_password(password)                   # set_password는 Django의 AbstractBaseUser에서 제공하는 메서드로, 비밀번호를 안전하게 저장
         user.save()
-        Token.objects.create(user=user)               # 사용자 생성 후 토큰 생성
         return user
     
 

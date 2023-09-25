@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from config.settings import base
+from django.conf import settings
 from . import models
 
 # Create your views here.
@@ -9,8 +9,8 @@ def redirect_login_page(request) :
 
 def login_request(request):
     context = {
-        'KAKAO_REST_API_KEY': base.KAKAO_REST_API_KEY,
-        'REDIRECT_URI': base.REDIRECT_URI,
+        'KAKAO_REST_API_KEY': settings.KAKAO_REST_API_KEY,
+        'REDIRECT_URI': settings.REDIRECT_URI,
     }
     return render(request, 'common/login.html', context)         # template/common/login.html 로그인 페이지와 연결해주는 함수
 

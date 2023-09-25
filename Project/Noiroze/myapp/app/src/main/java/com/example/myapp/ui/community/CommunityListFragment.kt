@@ -9,23 +9,26 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 
 import com.example.myapp.R
 import com.example.myapp.databinding.FragmentCommunityListBinding
-import com.example.myapp.ui.community.service.Result
-import com.example.myapp.databinding.ItemCommunityListBinding
+import com.example.myapp.ui.community.ViewModel.CommunityListAdapter
 import com.example.myapp.ui.community.ViewModel.CommunityListViewModel
-import com.example.myapp.ui.community.service.getTimeDifference
+import com.example.myapp.ui.community.service.CommunityResult
 
 class CommunityListFragment : Fragment() {
     private var _binding: FragmentCommunityListBinding? = null
     private val binding get() = _binding!!
 
-    private val viewModel: CommunityListViewModel by viewModels()
-    private val adapter = CommunityListAdapter()
+    private val viewModel: CommunityListViewModel by viewModels()         // 뷰모델 선언
+    private val adapter by lazy {                   // 어댑터 변수 선언.
+        CommunityListAdapter { CommunityResult ->
+            onItemClick(CommunityResult)                                           // 리사이클러 뷰 클릭에 대한 결과물을 넘겨줌
+        }
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = FragmentCommunityListBinding.inflate(inflater, container, false)
@@ -35,63 +38,30 @@ class CommunityListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.BoardlistView.apply {
-            adapter = adapter                                       // 멤버 변수의 어댑터 사용
-            layoutManager = LinearLayoutManager(requireContext())   // 레이아웃 매니저 사용
-        }
+        // ViewModel 설정
+        viewModel.commuList.observe(viewLifecycleOwner, Observer { commuList ->
+            adapter.updateData(commuList)
+        })
 
-        viewModel.loadBoardList()       // 게시판 목록 데이터 불러오기
-        initButtons()                   // 카테고리 선택 버튼 설정
+        // RecyclerView 어댑터 및 레이아웃 매니저 설정
+        binding.BoardlistView.adapter = this.adapter                                    
+        binding.BoardlistView.layoutManager = LinearLayoutManager(requireContext())
 
-        viewModel.filteredBoardList.observe(viewLifecycleOwner) { newBoardList ->
-            adapter.updateData(newBoardList)
-        } // 게시판 목록의 변화를 관찰하여 RecyclerView를 업데이트
+        viewModel.getCommuList(1, "전체보기")         // 최초 1페이지, 전체보기로 데이터 불러오기.
+        initButtons()                                               // 버튼 설정 사용
+
     } // onViewCreated
 
-
-    inner class CommunityListAdapter : RecyclerView.Adapter<CommunityListAdapter.CommunityListViewHolder>() {
-        private var boardList: List<Result> = emptyList()
-
-        override fun getItemCount() = boardList.size
-
-        inner class CommunityListViewHolder(val binding: ItemCommunityListBinding) :
-            RecyclerView.ViewHolder(binding.root)
-
-        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CommunityListViewHolder {
-            val binding = ItemCommunityListBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-            return CommunityListViewHolder(binding)
-        }
-
-        override fun onBindViewHolder(holder: CommunityListViewHolder, position: Int) {
-            val eachBoardList = boardList[position]
-            holder.binding.boardCategory.text = eachBoardList.category
-            holder.binding.boardTitle.text = eachBoardList.title
-            holder.binding.boardAuthor.text = eachBoardList.author
-            holder.binding.boardCreated.text = getTimeDifference(eachBoardList.createdDate)
-            holder.binding.boardLike.text = eachBoardList.like.size.toString()
-            // holder.binding.boardReply.text = eachBoardList.reply
-
-            holder.itemView.setOnClickListener {       // 목록에서 항목 클릭시, 여기서 _는 itemView의 View인데, 사용하지 않으므로 _로 처리.
-                onItemClick(eachBoardList)                    // onItemClick 함수 사용. it은 위쪽의 imageList의 Result, position은 아이템의 위치.
-            }
-        }
-
-        fun updateData(newBoardList: List<Result>) {
-            boardList = newBoardList
-            notifyDataSetChanged()
-        }
-
-        fun onItemClick(eachBoardList: Result) {   // Result에서 가져온 imgFile이 목표, 몇번째 파일인지 position으로 확인을 함.
-            val bundle = Bundle()
-            bundle.putString("title", eachBoardList.title)
-            bundle.putString("category", eachBoardList.category)
-            bundle.putString("author", eachBoardList.author)
-            bundle.putString("createdDate", eachBoardList.createdDate.toString())
-            bundle.putString("content", eachBoardList.content)
-            findNavController().navigate(R.id.action_communityFragment_to_boardDetailFragment, bundle)
-        } // 목록에서 항목을 클릭했을 때 호출되는 함수
-    } // CommunityBoardAdapter
-
+    fun onItemClick(eachBoardList: CommunityResult) {
+        val bundle = Bundle()
+        bundle.putString("title", eachBoardList.title)
+        bundle.putString("category", eachBoardList.category)
+        bundle.putString("author", eachBoardList.author)
+        bundle.putString("created_date", eachBoardList.created_date)
+        bundle.putString("content", eachBoardList.content)
+        findNavController().navigate(R.id.action_communityFragment_to_boardDetailFragment, bundle)
+    }
+    
     private fun initButtons() {
         val btnAll = binding.btnAll
         val btnCommu = binding.btnCommu
@@ -113,7 +83,7 @@ class CommunityListFragment : Fragment() {
                 revertBackgroundColorAnimator.start()
             }, 50L) // 지연시간 100ms (0.1초)
 
-            viewModel.changeCategory("전체보기")
+            viewModel.getCommuList(1,"전체보기")
         }
 
         btnCommu.setOnClickListener {
@@ -129,7 +99,7 @@ class CommunityListFragment : Fragment() {
                 revertBackgroundColorAnimator.start()
             }, 50L) // 지연시간 100ms (0.1초)
 
-            viewModel.changeCategory("소통해요")
+            viewModel.getCommuList(1,"소통해요")
         }
 
         btnInfo.setOnClickListener {
@@ -145,7 +115,7 @@ class CommunityListFragment : Fragment() {
                 revertBackgroundColorAnimator.start()
             }, 50L) // 지연시간 100ms (0.1초)
 
-            viewModel.changeCategory("정보공유")
+            viewModel.getCommuList(1,"정보공유")
         }
 
         btnPraise.setOnClickListener {
@@ -161,7 +131,7 @@ class CommunityListFragment : Fragment() {
                 revertBackgroundColorAnimator.start()
             }, 50L) // 지연시간 100ms (0.1초)
 
-            viewModel.changeCategory("칭찬해요")
+            viewModel.getCommuList(1,"칭찬해요")
         }
 
         btnShare.setOnClickListener {
@@ -177,7 +147,7 @@ class CommunityListFragment : Fragment() {
                 revertBackgroundColorAnimator.start()
             }, 50L) // 지연시간 100ms (0.1초)
 
-            viewModel.changeCategory("나눔해요")
+            viewModel.getCommuList(1,"나눔해요")
         }
 
         btnAddBoard.setOnClickListener {

@@ -82,7 +82,7 @@ class ComplaintCreateFragment : Fragment() {
                 format.timeZone = TimeZone.getTimeZone("GMT+9")
                 val created_date = format.format(Date())
                 val request = CreateComplainRequest(title, content, author, created_date)
-                val complainCreate = NoticeComplain.compservice.createComplain("Token $token", request)
+                val complainCreate = NoticeComplain.compService.createComplain("Bearer $token", request)
                 complainCreate.enqueue(object : Callback<ResponseBody> {
                     override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
                         if (response.isSuccessful) {

@@ -7,7 +7,7 @@ app_name = 'common'
 
 
 urlpatterns = [ 
-    path('login/', views.login_request, name='login'),  # 로그인 페이지,        common/login
-    path('register/', views.register_request, name='register'),  # 로그인 페이지   common/register
-    path('additional_info/', views.additional_info, name='additional_info'),
+    path('login/', views.login_request, name='login'),                              # 로그인 페이지, common/login
+    path('register/', views.register_request, name='register'),                     # 회원가입 페이지, common/register
+    path('additional_info/', views.additional_info, name='additional_info'),        # 추가정보 입력 페이지
 ]

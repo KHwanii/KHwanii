@@ -125,8 +125,37 @@
 
 </html>
 
+
 <script>
-    $(document).ready(function() {
+  document.getElementById('register-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+
+    var url = this.action;
+    var formData = new FormData(this);
+
+    fetch(url, {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => {
+        if (!response.ok) {
+            return response.json().then(data => {
+                throw new Error(data.errors ? data.errors[0] : '회원가입에 실패하였습니다. 입력하신 정보를 확인해주세요.');
+            });
+        }
+        alert('회원가입에 성공하였습니다.');
+        window.location.href = "/common/login";
+    })
+    .catch(error => {
+        alert(error.message);
+        window.location.href = "/common/register";
+    });
+  });
+</script>
+
+
+<!-- jQuery 사용
+      $(document).ready(function() {
         $('#register-form').on('submit', function(e) {
             e.preventDefault(); // Prevent the form from submitting via the browser.
             var form = $(this);
@@ -158,4 +187,6 @@
             });
         });
     });
-</script>
+
+
+-->
