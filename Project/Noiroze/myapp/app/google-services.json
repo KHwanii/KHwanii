@@ -1,36 +1,26 @@
 {
   "project_info": {
-    "project_number": "784070081362",
-    "project_id": "noiroze-d29b5",
-    "storage_bucket": "noiroze-d29b5.appspot.com"
+    "project_number": "570318352391",
+    "project_id": "fcmpushnotification-a812f",
+    "storage_bucket": "fcmpushnotification-a812f.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:784070081362:android:d3c14026cf96803ff5588b",
+        "mobilesdk_app_id": "1:570318352391:android:f5fcf0c8f3629db58cbaa2",
         "android_client_info": {
           "package_name": "com.example.myapp"
         }
       },
-      "oauth_client": [
-        {
-          "client_id": "784070081362-iaprgn7f1tk7mfdm0f0od84b3vfdmdv4.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
+      "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyCYGmY-oX-Q3Lj-Jb0_UVaHzbOCxbMsnt8"
+          "current_key": "AIzaSyA87LSFCGFnAk8yxoQiu_UULNFOnZxuips"
         }
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "784070081362-iaprgn7f1tk7mfdm0f0od84b3vfdmdv4.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
+          "other_platform_oauth_client": []
         }
       }
     }

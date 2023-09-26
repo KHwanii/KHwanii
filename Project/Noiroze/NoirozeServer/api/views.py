@@ -56,7 +56,7 @@ class UserLoginView(APIView):
 
     def post(self, request):
         serializer = UserLoginSerializer(data=request.data)
-        if serializer.is_valid():                            # 유저 시리얼라이저 확인 후
+        if serializer.is_valid():                                       # 유저 시리얼라이저 확인 후
             user = serializer.validated_data
             # print(dir(user))
             refresh = RefreshToken.for_user(user)
@@ -202,7 +202,7 @@ class CommunityBoardViewSet(viewsets.ModelViewSet):
         if category and category != "전체보기" :
             self.queryset = self.queryset.filter(category=category)
         
-        paginator = Paginator(self.queryset, 10)
+        paginator = Paginator(self.queryset.order_by('-created_date'), 10)
 
         try:
             boards = paginator.page(page)

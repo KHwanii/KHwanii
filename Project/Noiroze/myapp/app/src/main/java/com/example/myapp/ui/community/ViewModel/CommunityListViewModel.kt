@@ -13,7 +13,7 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class CommunityListViewModel : ViewModel() {
-    private val _commuList = MutableLiveData<List<CommunityResult>>() // BoardItem은 실제 데이터 모델 타입으로 변경해주세요.
+    private val _commuList = MutableLiveData<List<CommunityResult>>()
     val commuList: LiveData<List<CommunityResult>> = _commuList
     
     fun getCommuList(page : Int, category: String) {

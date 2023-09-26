@@ -1,6 +1,8 @@
 plugins {
-    id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
+    id "com.android.application"
+    // Add the Google services Gradle plugin
+    id "com.google.gms.google-services"
 }
 
 android {
@@ -40,7 +42,6 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.6.1'
     implementation 'com.google.android.material:material:1.5.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
-    implementation 'com.google.firebase:firebase-messaging-ktx:23.1.0'
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
@@ -65,9 +66,10 @@ dependencies {
     implementation 'de.hdodenhof:circleimageview:3.1.0'   // 동그란 이미지 뷰 사용을 위해 사용
     implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
 
-    implementation platform('com.google.firebase:firebase-bom:32.1.1')
-    implementation 'com.google.firebase:firebase-analytics-ktx:21.3.0'
-    implementation 'com.google.firebase:firebase-messaging:23.0.0'   // FCM 기능 추가
+    // Import the Firebase BoM
+    implementation "com.google.firebase:firebase-bom:32.3.1"
+    implementation "com.google.firebase:firebase-messaging-ktx:23.2.1"   // FCM 기능 추가
+
 
     implementation 'com.squareup.moshi:moshi:1.9.2'
     implementation 'com.squareup.retrofit2:converter-moshi:2.9.0'   // Retrofit2 Moshi Converter 의존성

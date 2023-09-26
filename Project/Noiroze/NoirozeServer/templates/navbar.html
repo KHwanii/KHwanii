@@ -68,47 +68,64 @@
             </nav>
         </div>
 </body>
+
 <script>
-document.addEventListener('DOMContentLoaded', function() {
-    updateLoginStatus();
-});
-
-function updateLoginStatus() {
-    const authToken = localStorage.getItem("auth-token");
-    const loginStatus = document.getElementById("loginStatus");
-
-    if (authToken) {
-        loginStatus.textContent = "계정 활성화";
-    } else {
-        loginStatus.textContent = "로그인이 필요합니다";
+    function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
     }
-}
-function navigateToDashboard() {
-    if (isAuthenticated()) {
-        window.location.href = "{% url 'main:dashboard' %}";
-    }
-}
 
-function navigateToDong() {
-    if (isAuthenticated()) {
-        window.location.href = "{% url 'main:dong_101' %}";
-    }
-}
+    document.addEventListener('DOMContentLoaded', function() {
+        updateLoginStatus();
+    });
 
-function navigateToComplainBoardList() {
-    if (isAuthenticated()) {
-        window.location.href = "{% url 'main:complain_board_list' %}";
-    }
-}
+    function updateLoginStatus() {
+        var token = getCookie("auth-token");
+        const loginStatus = document.getElementById("loginStatus");
 
-function navigateToCommunityBoardList() {
-    if (isAuthenticated()) {
-        window.location.href = "{% url 'main:community_board_list' %}";
+        if (token) {
+            loginStatus.textContent = "계정 활성화";
+        } else {
+            loginStatus.textContent = "로그인이 필요합니다";
+        }
     }
-}
 
-function isAuthenticated() {
-    const authToken = localStorage.getItem("auth-token");
-    return authToken !== null;
-}
+    function navigateToDashboard() {
+        if (isAuthenticated()) {
+            window.location.href = "{% url 'main:dashboard' %}";
+        }
+    }
+
+    function navigateToDong() {
+        if (isAuthenticated()) {
+            window.location.href = "{% url 'main:dong_101' %}";
+        }
+    }
+
+    function navigateToComplainBoardList() {
+        if (isAuthenticated()) {
+            window.location.href = "{% url 'main:complain_board_list' %}";
+        }
+    }
+
+    function navigateToCommunityBoardList() {
+        if (isAuthenticated()) {
+            window.location.href = "{% url 'main:community_board_list' %}";
+        }
+    }
+
+    function isAuthenticated() {
+        var token = getCookie("auth-token");
+        return token !== null;
+    }
 </script>
