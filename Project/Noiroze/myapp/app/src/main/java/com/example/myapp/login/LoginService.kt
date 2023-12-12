@@ -55,17 +55,6 @@ data class LoginUser(
     val ho: String,
 ) // 로그인 성공 시, 받아오는 User 데이터
 
-
-data class UserDetail(
-    @SerializedName("userid")
-    val userid: String,
-    @SerializedName("dong")
-    val dong: String,
-    @SerializedName("ho")
-    val ho: String,
-    // 필요하면 나머지 필드도 추가
-)
-
 // 날짜 변환 함수
 val originalFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssXXX", Locale.ENGLISH)
 val monthDayFormat = SimpleDateFormat("M월 d일", Locale.KOREAN)

@@ -26,8 +26,8 @@ class HomeActivity : AppCompatActivity() {
         navView.setupWithNavController(navController)   // 네비게이션 뷰와 컨트롤러와 연결 -> BottomNavigationView와 NavController를 연결하여 BottomNavigationView의 네비게이션 기능이 설정
     } // onCreate
 
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {              // 메뉴를 생성하고 메뉴 아이템의 클릭 이벤트 처리
-        menuInflater.inflate(R.menu.top_app_bar, menu)  // top_app_bar.xml을 menu 객체로 인플레이트.  xml에 정의된 아이템들이 menu 객체에 추가돼
-        return super.onCreateOptionsMenu(menu)    // 나머지 기본 동작 처리
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {             // 메뉴를 생성하고 메뉴 아이템의 클릭 이벤트 처리
+        menuInflater.inflate(R.menu.top_app_bar, menu)                  // top_app_bar.xml을 menu 객체로 인플레이트.  xml에 정의된 아이템들이 menu 객체에 추가
+        return super.onCreateOptionsMenu(menu)                          // 나머지 기본 동작 처리
     }
 }

@@ -26,7 +26,7 @@ urlpatterns = [
     path('token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),          # 사용자 토큰 생성
     path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),         # 사용자 토큰 리프레시
 
-    path('', include(router.urls))
+    path('', include(router.urls))                          
 ]
 
 
